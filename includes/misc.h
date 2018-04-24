@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/23 22:52:36 by gpouyat           #+#    #+#             */
-/*   Updated: 2018/04/24 09:24:28 by gpouyat          ###   ########.fr       */
+/*   Updated: 2018/04/24 17:53:42 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,6 @@ typedef struct g_macho_input {
     size_t length;
 } t_macho_input;
 
-int     map_file(const char *path, t_macho_input *input_file);
+int     map_file(const char *prgm, const char *path, t_macho_input *input_file);
 
 #endif

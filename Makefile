@@ -6,7 +6,7 @@
 #    By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/04/23 09:03:46 by gpouyat           #+#    #+#              #
-#    Updated: 2018/04/24 09:11:54 by gpouyat          ###   ########.fr        #
+#    Updated: 2018/04/24 14:58:19 by gpouyat          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -66,11 +66,11 @@ OBJ_MISC = $(addprefix $(OBJ_PATH_MISC)/,$(OBJ_NAME_MISC))
 
 all: $(NAME_NM) $(NAME_OTOOL)
 
-$(NAME_NM): $(OBJ_MISC) $(LIB) $(OBJ_NM)
+$(NAME_NM): $(LIB) $(OBJ_MISC) $(OBJ_NM)
 	$(CC) -o $(NAME_NM) $(FLAGS) $(OBJ_NM) $(OBJ_MISC) $(LIB)
 	@printf "$(C_G)%-20s\t$(C_Y)Compilation\t$(C_G)[ OK ✔ ]$(C_NO)\n\n" $(NAME_NM)
 
-$(NAME_OTOOL): $(OBJ_MISC) $(LIB) $(OBJ_OTOOL)
+$(NAME_OTOOL): $(LIB) $(OBJ_MISC) $(OBJ_OTOOL)
 	$(CC) -o $(NAME_OTOOL) $(FLAGS) $(OBJ_OTOOL) $(OBJ_MISC) $(LIB)
 	@printf "$(C_G)%-20s\t$(C_Y)Compilation\t$(C_G)[ OK ✔ ]$(C_NO)\n\n" $(NAME_OTOOL)
 
@@ -107,4 +107,4 @@ fclean:
 
 minire: clean all
 
-re: fclean all miniclean minire
+re: fclean all
