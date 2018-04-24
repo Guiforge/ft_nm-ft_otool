@@ -6,7 +6,7 @@
 #    By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/04/23 09:03:46 by gpouyat           #+#    #+#              #
-#    Updated: 2018/04/24 14:58:19 by gpouyat          ###   ########.fr        #
+#    Updated: 2018/04/24 19:09:10 by gpouyat          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,7 +49,7 @@ SRC_NAME_NM = main.c
 
 SRC_NAME_OTOOL = main.c
 
-SRC_NAME_MISC = map_file.c
+SRC_NAME_MISC = map_file.c secure_add.c
 
 OBJ_NAME_NM = $(SRC_NAME_NM:.c=.o)
 OBJ_NAME_OTOOL = $(SRC_NAME_OTOOL:.c=.o)
