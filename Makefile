@@ -6,7 +6,7 @@
 #    By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/04/23 09:03:46 by gpouyat           #+#    #+#              #
-#    Updated: 2018/04/23 09:47:48 by gpouyat          ###   ########.fr        #
+#    Updated: 2018/04/24 09:11:54 by gpouyat          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ ifeq ($(SAN),yes)
     FLAGS		+= -fsanitize=address -fno-omit-frame-pointer -fno-optimize-sibling-calls
 endif
 
-NAME_NM = ft_mn
+NAME_NM = ft_nm
 NAME_OTOOL = ft_otool
 
 C_NO = \033[0m
@@ -36,35 +36,42 @@ C_R = \033[1;31m
 
 SRC_PATH_NM = ./srcs/ft_nm
 SRC_PATH_OTOOL = ./srcs/ft_otool
+SRC_PATH_MISC = ./srcs/misc
 LIB_PATH = ./libft
 INC_PATH = ./includes
 INC_LIB = ./libft/includes
 OBJ_PATH = ./obj
 OBJ_PATH_NM = ./obj/nm
 OBJ_PATH_OTOOL = ./obj/otool
+OBJ_PATH_MISC = ./obj/misc
 
 SRC_NAME_NM = main.c
 
 SRC_NAME_OTOOL = main.c
 
+SRC_NAME_MISC = map_file.c
+
 OBJ_NAME_NM = $(SRC_NAME_NM:.c=.o)
 OBJ_NAME_OTOOL = $(SRC_NAME_OTOOL:.c=.o)
+OBJ_NAME_MISC = $(SRC_NAME_MISC:.c=.o)
 LIB_NAME = libft.a
 
 SRC_NM = $(addprefix $(SRC_PATH_NM)/, $(SRC_NAME_NM))
 SRC_OTOOL = $(addprefix $(SRC_PATH_OTOOL)/, $(SRC_NAME_OTOOL))
+SRC_MISC = $(addprefix $(SRC_PATH_MISC)/, $(SRC_NAME_MISC))
 LIB = $(addprefix $(LIB_PATH)/, $(LIB_NAME))
 OBJ_NM = $(addprefix $(OBJ_PATH_NM)/,$(OBJ_NAME_NM))
 OBJ_OTOOL = $(addprefix $(OBJ_PATH_OTOOL)/,$(OBJ_NAME_OTOOL))
+OBJ_MISC = $(addprefix $(OBJ_PATH_MISC)/,$(OBJ_NAME_MISC))
 
 all: $(NAME_NM) $(NAME_OTOOL)
 
-$(NAME_NM): $(LIB) $(OBJ_NM)
-	$(CC) -o $(NAME_NM) $(FLAGS) $(OBJ_NM) $(LIB)
+$(NAME_NM): $(OBJ_MISC) $(LIB) $(OBJ_NM)
+	$(CC) -o $(NAME_NM) $(FLAGS) $(OBJ_NM) $(OBJ_MISC) $(LIB)
 	@printf "$(C_G)%-20s\t$(C_Y)Compilation\t$(C_G)[ OK ✔ ]$(C_NO)\n\n" $(NAME_NM)
 
-$(NAME_OTOOL): $(LIB) $(OBJ_OTOOL)
-	$(CC) -o $(NAME_OTOOL) $(FLAGS) $(OBJ_OTOOL) $(LIB)
+$(NAME_OTOOL): $(OBJ_MISC) $(LIB) $(OBJ_OTOOL)
+	$(CC) -o $(NAME_OTOOL) $(FLAGS) $(OBJ_OTOOL) $(OBJ_MISC) $(LIB)
 	@printf "$(C_G)%-20s\t$(C_Y)Compilation\t$(C_G)[ OK ✔ ]$(C_NO)\n\n" $(NAME_OTOOL)
 
 $(OBJ_PATH_NM)/%.o: $(SRC_PATH_NM)/%.c
@@ -75,8 +82,17 @@ $(OBJ_PATH_OTOOL)/%.o: $(SRC_PATH_OTOOL)/%.c
 	@mkdir -p $(OBJ_PATH) $(OBJ_PATH_OTOOL)
 	$(CC) $(FLAGS) -o $@ -c $< -I $(INC_PATH) -I $(INC_LIB)
 
+$(OBJ_PATH_MISC)/%.o: $(SRC_PATH_MISC)/%.c
+	@mkdir -p $(OBJ_PATH) $(OBJ_PATH_MISC)
+	$(CC) $(FLAGS) -o $@ -c $< -I $(INC_PATH) -I $(INC_LIB)
+
 $(LIB):
-	@make -C $(LIB_PATH)
+	@make -C $(LIB_PATH) DEV=$(DEV) SAN=$(SAN)
+
+miniclean:
+	@rm -rf $(OBJ_NM)
+	@rm -rf $(OBJ_OTOOL)
+	@printf "$(C_B)%-20s\t$(C_Y)Cleaning obj\t$(C_G)[ OK ✔ ]$(C_NO)\n" $(NAME_NM) $(NAME_OTOOL)
 
 clean:
 	@rm -rf $(OBJ_NM)
@@ -91,4 +107,4 @@ fclean:
 
 minire: clean all
 
-re: fclean all
+re: fclean all miniclean minire

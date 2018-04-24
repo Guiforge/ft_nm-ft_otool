@@ -1,0 +1,34 @@
+{
+    // Utilisez IntelliSense pour en savoir plus sur les attributs possibles.
+    // Pointez pour afficher la description des attributs existants.
+    // Pour plus d'informations, visitez : https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+
+        {
+            "name": "nm",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/ft_nm",
+            "args": ["toto"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": true,
+            "MIMode": "lldb"
+        },
+
+        {
+            "name": "otool",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/ft_otool",
+            "args": ["toto"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": true,
+            "MIMode": "lldb"
+        },
+    ]
+}

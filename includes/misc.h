@@ -1,24 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   misc.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/24 09:02:33 by gpouyat           #+#    #+#             */
-/*   Updated: 2018/04/24 09:05:02 by gpouyat          ###   ########.fr       */
+/*   Created: 2018/04/23 22:52:36 by gpouyat           #+#    #+#             */
+/*   Updated: 2018/04/24 09:24:28 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "misc.h"
+
+#ifndef MISC_H
+# define MISC_H
+
 #include "libft.h"
-#include "ft_nm.h"
 
+typedef struct g_macho_input {
+    const void *data;
+    size_t length;
+} t_macho_input;
 
-int main(int ac, const char **av)
-{
-    (void)ac;
-    (void)av;
-    ft_putendl("I am nm");
-    map_file(av[1], NULL);
-}
+int     map_file(const char *path, t_macho_input *input_file);
+
+#endif
