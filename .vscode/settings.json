@@ -1,5 +1,7 @@
 {
     "files.associations": {
-        "mman.h": "c"
+        "mman.h": "c",
+        "loader.h": "c",
+        "ar.h": "c"
     }
 }
