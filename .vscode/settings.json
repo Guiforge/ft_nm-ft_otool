@@ -2,6 +2,7 @@
     "files.associations": {
         "mman.h": "c",
         "loader.h": "c",
-        "ar.h": "c"
+        "ar.h": "c",
+        "fat.h": "c"
     }
 }
