@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/30 19:07:05 by gpouyat           #+#    #+#             */
-/*   Updated: 2018/04/30 19:40:49 by gpouyat          ###   ########.fr       */
+/*   Updated: 2018/04/30 20:35:17 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static t_type_macho which_header(const t_macho_input input_file)
 	return (M_ERR);
 }
 
-int		exec_handler(t_handler_func funcs[], t_macho_input input_file)
+int		exec_handler(const t_handler_func funcs[], t_macho_input input_file)
 {
 	t_type_macho	type;
 	int				index;
@@ -42,7 +42,7 @@ int		exec_handler(t_handler_func funcs[], t_macho_input input_file)
 	if (type == M_ERR)
 		return (1);
 	while (funcs[++index].type != M_END)
-		if (funcs[++index].type == type)
+		if (funcs[index].type == type)
 			return (funcs[index].f(input_file));
 	return (2);
 }

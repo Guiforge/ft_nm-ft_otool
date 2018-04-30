@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/23 22:54:19 by gpouyat           #+#    #+#             */
-/*   Updated: 2018/04/24 18:36:58 by gpouyat          ###   ########.fr       */
+/*   Updated: 2018/04/30 20:44:01 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,12 @@ static int	static_intern_mmap(const char *prgm, void **data, int fd, size_t size
 	return (0);
 }
 
+static int	close_fd_return(int fd, int ret)
+{
+	close(fd);
+	return (ret);
+}
+
 int	map_file(const char *prgm, const char *path, t_macho_input *input_file)
 {
 	struct stat		buf;
@@ -58,14 +64,13 @@ int	map_file(const char *prgm, const char *path, t_macho_input *input_file)
 	if ((fd = static_intern_open(prgm, path)) < 0)
 		return (1);
 	if (static_intern_fstat(prgm, fd, &buf))
-		return (1);
+		return (close_fd_return(fd, 1));
 	if (static_intern_mmap(prgm, &data, fd, buf.st_size))
-		return (1);
+		return (close_fd_return(fd, 1));
 	if (input_file)
 	{
 		input_file->data = data;
 		input_file->length = buf.st_size;
 	}
-	close(fd);
-	return (0);
+	return (close_fd_return(fd, 0));
 }
