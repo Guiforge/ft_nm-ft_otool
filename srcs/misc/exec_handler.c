@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/30 19:07:05 by gpouyat           #+#    #+#             */
-/*   Updated: 2018/04/30 20:35:17 by gpouyat          ###   ########.fr       */
+/*   Updated: 2018/05/06 12:28:57 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static t_type_macho which_header(const t_macho_input input_file)
 {
 	uint32_t		magic;
 
-	magic = get_header(input_file);
+	magic = get_magic(input_file);
 	if (magic == MH_MAGIC_64 || magic == MH_CIGAM_64)
 		return (M_64);
 	else if (magic == MH_MAGIC || magic == MH_CIGAM)
@@ -32,7 +32,7 @@ static t_type_macho which_header(const t_macho_input input_file)
 	return (M_ERR);
 }
 
-int		exec_handler(const t_handler_func funcs[], t_macho_input input_file)
+int		exec_handler(const t_handler_func funcs[], t_macho_input input_file, void **list)
 {
 	t_type_macho	type;
 	int				index;
@@ -43,6 +43,6 @@ int		exec_handler(const t_handler_func funcs[], t_macho_input input_file)
 		return (1);
 	while (funcs[++index].type != M_END)
 		if (funcs[index].type == type)
-			return (funcs[index].f(input_file));
+			return (funcs[index].f(input_file, list));
 	return (2);
 }

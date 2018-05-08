@@ -10,7 +10,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/ft_nm",
-            "args": ["toto"],
+            "args": ["ft_nm"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],

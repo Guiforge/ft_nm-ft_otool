@@ -6,7 +6,7 @@
 #    By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/04/23 09:03:46 by gpouyat           #+#    #+#              #
-#    Updated: 2018/04/30 19:41:56 by gpouyat          ###   ########.fr        #
+#    Updated: 2018/05/06 12:24:07 by gpouyat          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,7 +45,7 @@ OBJ_PATH_NM = ./obj/nm
 OBJ_PATH_OTOOL = ./obj/otool
 OBJ_PATH_MISC = ./obj/misc
 
-SRC_NAME_NM = main.c
+SRC_NAME_NM = main.c error.c handle_64.c get_sim_type.c
 
 SRC_NAME_OTOOL = main.c
 

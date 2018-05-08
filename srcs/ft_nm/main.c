@@ -6,11 +6,10 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/24 09:02:33 by gpouyat           #+#    #+#             */
-/*   Updated: 2018/04/30 20:46:11 by gpouyat          ###   ########.fr       */
+/*   Updated: 2018/05/08 15:30:24 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "misc.h"
 #include "libft.h"
 #include "ft_nm.h"
 #include <sys/mman.h>
@@ -40,19 +39,21 @@ static int		intern_nm_parse_option(int ac, const char **av)
 	return (0);
 }
 
-static int fake_handler(t_macho_input input)
+static int fake_handler(t_macho_input input, void **list)
 {
+	(void)list;
 	(void)input;
-	ft_printf("Fake Handler\n");
+	ft_printf("Fake Handler\n\n");
 	return (0);
 }
 
-static int one_file(const char *path)
+static int one_file(const char *path, int print)
 {
 	t_macho_input		input_file;
+	int					ret;
 	const t_handler_func handler_funcs[] = {
 		{M_32, &fake_handler},
-		{M_64, &fake_handler},
+		{M_64, &handler_64},
 		{M_FAT, &fake_handler},
 		{M_LIB, &fake_handler},
 		{M_END, &fake_handler},
@@ -60,10 +61,11 @@ static int one_file(const char *path)
 
 	if (map_file(PROGNAME, path, &input_file) != 0)
 		return (1);
-	if (exec_handler(handler_funcs, input_file) != 0)
-		ft_dprintf(STDERR_FILENO, "ERROR TYPE FILE\n");
+	if (print)
+		ft_printf("\n%s:\n", path);
+	ret = exec_handler(handler_funcs, input_file, NULL);
 	munmap((void *)input_file.data, input_file.length);
-	return (0);
+	return (ret);
 }
 
 static int loop_files(const char *paths[])
@@ -75,8 +77,7 @@ static int loop_files(const char *paths[])
 	ret = 0;
 	while (paths[++index])
 	{
-		ft_printf("\n%s:\n", paths[index]);
-		if (one_file(paths[index]) !=0)
+		if (one_file(paths[index], 1) !=0)
 			ret = 1;
 	}
 	return(ret);
@@ -89,6 +90,6 @@ int main(int ac, const char **av)
 	if (ac > g_optind + 1)
 		return (loop_files(&av[g_optind]));
 	else if (av[g_optind])
-		return (one_file(av[g_optind]));
-	return (one_file("./a.out"));
+		return (one_file(av[g_optind], 0));
+	return (one_file("./a.out", 0));
 }

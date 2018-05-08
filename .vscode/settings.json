@@ -3,6 +3,11 @@
         "mman.h": "c",
         "loader.h": "c",
         "ar.h": "c",
-        "fat.h": "c"
+        "fat.h": "c",
+        "nlist.h": "c",
+        "libft.h": "c",
+        "ft_nm.h": "c",
+        "misc.h": "c",
+        "type_traits": "c"
     }
 }
