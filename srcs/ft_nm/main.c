@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/24 09:02:33 by gpouyat           #+#    #+#             */
-/*   Updated: 2018/05/08 15:30:24 by gpouyat          ###   ########.fr       */
+/*   Updated: 2018/05/10 17:54:36 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,9 @@ static int one_file(const char *path, int print)
 		return (1);
 	if (print)
 		ft_printf("\n%s:\n", path);
-	ret = exec_handler(handler_funcs, input_file, NULL);
+	t_list	*list;
+	list = NULL;
+	ret = exec_handler(handler_funcs, input_file, (void **)&list);
 	munmap((void *)input_file.data, input_file.length);
 	return (ret);
 }

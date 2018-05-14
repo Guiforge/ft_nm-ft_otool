@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/23 22:52:36 by gpouyat           #+#    #+#             */
-/*   Updated: 2018/05/08 15:34:20 by gpouyat          ###   ########.fr       */
+/*   Updated: 2018/05/09 10:02:18 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ typedef struct	s_macho_input {
 	// t_type_macho			type;
 	uint32_t				magic;
 	struct load_command		*lc;
+	//struct load_command		*lc_seg;
 	uint32_t				ncmds;
 }				t_macho_input;
 
