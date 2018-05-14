@@ -53,3 +53,5 @@ dkms.conf
 
 #prgm
 .DS_Store
+ft_nm
+ft_otool

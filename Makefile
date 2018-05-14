@@ -6,7 +6,7 @@
 #    By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/04/23 09:03:46 by gpouyat           #+#    #+#              #
-#    Updated: 2018/05/14 09:17:21 by gpouyat          ###   ########.fr        #
+#    Updated: 2018/05/14 09:43:39 by gpouyat          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,8 +34,8 @@ C_B = \033[1;34m
 C_C = \033[1;36m
 C_R = \033[1;31m
 
-SRC_PATH_NM = ./srcs/ft_nm
-SRC_PATH_OTOOL = ./srcs/ft_otool
+SRC_PATH_NM = ./srcs/ft_nm_dir
+SRC_PATH_OTOOL = ./srcs/ft_otool_dir
 SRC_PATH_MISC = ./srcs/misc
 LIB_PATH = ./libft
 INC_PATH = ./includes
