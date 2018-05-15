@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/23 22:52:36 by gpouyat           #+#    #+#             */
-/*   Updated: 2018/05/09 10:02:18 by gpouyat          ###   ########.fr       */
+/*   Updated: 2018/05/15 10:58:44 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ typedef struct	s_handler_func
 int				map_file(const char *prgm, const char *path, t_macho_input *input_file);
 void			*secure_add(const t_macho_input input, const void *start_add, size_t length);
 void			*secure_add_mv(t_macho_input input, const void *start_add, size_t length);
+char			*secure_string(t_macho_input input, char *string_table, uint32_t offset);
 uint32_t		get_magic(t_macho_input input_file);
 int				get_header_32(const t_macho_input input_file, const void *add, struct mach_header *header);
 int				get_header_64(const t_macho_input input_file, const void *add, struct mach_header_64 *header);

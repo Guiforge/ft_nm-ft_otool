@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_64.c                                        :+:      :+:    :+:   */
+/*   handle_32.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 12:16:54 by gpouyat           #+#    #+#             */
-/*   Updated: 2018/05/15 11:28:48 by gpouyat          ###   ########.fr       */
+/*   Updated: 2018/05/15 11:34:38 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "ft_nm.h"
 #include <mach-o/nlist.h>
 
-static t_list		*create_sym_64(t_macho_input input, char *string_table, struct nlist_64 sym_table)
+static t_list		*create_sym(t_macho_input input, char *string_table, struct nlist sym_table)
 {
 	t_sym	*elem_sym;
 	t_list	*elem;
@@ -27,16 +27,16 @@ static t_list		*create_sym_64(t_macho_input input, char *string_table, struct nl
 	}
 	elem_sym->name = secure_string(input, string_table, sym_table.n_un.n_strx);
 	elem_sym->value = sym_table.n_value;
-	find_seg_sect_name_64(sym_table, elem_sym, input);
+	find_seg_sect_name(sym_table, elem_sym, input);
 	elem = ft_lstnew(elem_sym, sizeof(t_sym));
 	return (elem);
 }
 
-static t_list	*get_list_syms_64(struct symtab_command sym, t_macho_input input)
+static t_list	*get_list_syms(struct symtab_command sym, t_macho_input input)
 {
 	t_list			*list;
 	char			*string;
-	struct nlist_64 *array;
+	struct nlist *array;
 	int64_t		index;
 
 	list = NULL;
@@ -54,24 +54,24 @@ static t_list	*get_list_syms_64(struct symtab_command sym, t_macho_input input)
 		return (NULL);
 	}
 	while (++index < sym.nsyms)
-		ft_lstpush(&list, create_sym_64(input, string, array[index]));
+		ft_lstpush(&list, create_sym(input, string, array[index]));
 	return(list);
 }
 
-int handler_64(t_macho_input input, void **list)
+int handler_32(t_macho_input input, void **list)
 {
-	struct mach_header_64 header;
+	struct mach_header header;
 	struct	symtab_command	*sym;
 
-	if (get_header_64(input, input.data, &header))
+	if (get_header_32(input, input.data, &header))
 		return(return_error(input.path, ERR_INVALID, 2));
 	input.ncmds = header.ncmds;
-	if (!(input.lc = secure_add_mv(input, input.data, sizeof(struct mach_header_64))))
+	if (!(input.lc = secure_add_mv(input, input.data, sizeof(struct mach_header))))
 		return(return_error(input.path, ERR_INVALID, 2));
 	sym = get_symtab_cmd(input);
 	if (!sym)
 		return (2);
-	*list = get_list_syms_64(*sym, input);
+	*list = get_list_syms(*sym, input);
 
 	while (*list)
 	{

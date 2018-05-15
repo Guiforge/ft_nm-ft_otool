@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/24 09:02:33 by gpouyat           #+#    #+#             */
-/*   Updated: 2018/05/10 17:54:36 by gpouyat          ###   ########.fr       */
+/*   Updated: 2018/05/15 11:34:56 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static int one_file(const char *path, int print)
 	t_macho_input		input_file;
 	int					ret;
 	const t_handler_func handler_funcs[] = {
-		{M_32, &fake_handler},
+		{M_32, &handler_32},
 		{M_64, &handler_64},
 		{M_FAT, &fake_handler},
 		{M_LIB, &fake_handler},
