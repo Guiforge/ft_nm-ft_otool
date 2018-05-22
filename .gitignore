@@ -2,7 +2,8 @@
 *.d
 
 # Object files
-*.o
+obj
+obj/*.o
 *.ko
 *.obj
 *.elf
@@ -17,16 +18,7 @@
 *.pch
 
 # Libraries
-*.lib
-*.a
-*.la
-*.lo
-
-# Shared objects (inc. Windows DLLs)
-*.dll
-*.so
-*.so.*
-*.dylib
+libft.a
 
 # Executables
 *.exe
