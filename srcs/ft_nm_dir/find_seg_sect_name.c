@@ -6,14 +6,14 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/05 17:45:26 by gpouyat           #+#    #+#             */
-/*   Updated: 2018/05/15 11:38:13 by gpouyat          ###   ########.fr       */
+/*   Updated: 2018/05/24 16:12:04 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_nm.h"
 #include <mach-o/nlist.h>
 
-static int		copy_sect_seg_name_64(t_macho_input input, t_sym *elem_sym, struct segment_command_64 *segment, size_t index)
+static int		copy_sect_seg_name_64(t_arch input, t_sym *elem_sym, struct segment_command_64 *segment, size_t index)
 {
 	struct section_64			*sect;
 	
@@ -31,7 +31,7 @@ static int		copy_sect_seg_name_64(t_macho_input input, t_sym *elem_sym, struct s
 }
 
 //Find segment, find section if there is section and copy n_type
-int		find_seg_sect_name_64(struct nlist_64 symbol, t_sym *elem_sym, t_macho_input input)
+int		find_seg_sect_name_64(struct nlist_64 symbol, t_sym *elem_sym, t_arch input)
 {
 	struct load_command			*lc;
 	size_t				i;
@@ -42,24 +42,24 @@ int		find_seg_sect_name_64(struct nlist_64 symbol, t_sym *elem_sym, t_macho_inpu
 	lc = input.lc;
 	while (i++ < input.ncmds)
 	{
-		if (lc->cmd == LC_SEGMENT_64)
+		if (ifswap32(&input, lc->cmd) == LC_SEGMENT_64)
 		{
-			if (n + ((struct segment_command_64 *)lc)->nsects >= symbol.n_sect)
+			if (n + ifswap32(&input, ((struct segment_command_64 *)lc)->nsects) >= symbol.n_sect)
 			{
 				elem_sym->ntype = symbol.n_type;
 				elem_sym->is_ext = symbol.n_type & N_EXT;
 				return (copy_sect_seg_name_64(input, elem_sym, ((struct segment_command_64 *)lc), symbol.n_sect - n - 1));
 			}
-			n += ((struct segment_command_64 *)lc)->nsects;
+			n += ifswap32(&input, ((struct segment_command_64 *)lc)->nsects);
 		}
-		if (!(lc = secure_add_mv(input, lc, lc->cmdsize)))
+		if (!(lc = secure_add_mv(input, lc, ifswap32(&input, lc->cmdsize))))
 			return_error(input.path, ERR_MALFORMED, 1);
 	}
 	return (1);
 }
 
 
-static int		copy_sect_seg_name(t_macho_input input, t_sym *elem_sym, struct segment_command *segment, size_t index)
+static int		copy_sect_seg_name(t_arch input, t_sym *elem_sym, struct segment_command *segment, size_t index)
 {
 	struct section			*sect;
 	
@@ -77,7 +77,7 @@ static int		copy_sect_seg_name(t_macho_input input, t_sym *elem_sym, struct segm
 }
 
 //Find segment, find section if there is section and copy n_type
-int		find_seg_sect_name(struct nlist symbol, t_sym *elem_sym, t_macho_input input)
+int		find_seg_sect_name(struct nlist symbol, t_sym *elem_sym, t_arch input)
 {
 	struct load_command			*lc;
 	size_t				i;
@@ -88,17 +88,17 @@ int		find_seg_sect_name(struct nlist symbol, t_sym *elem_sym, t_macho_input inpu
 	lc = input.lc;
 	while (i++ < input.ncmds)
 	{
-		if (lc->cmd == LC_SEGMENT)
+		if (ifswap32(&input, lc->cmd) == LC_SEGMENT)
 		{
-			if (n + ((struct segment_command *)lc)->nsects >= symbol.n_sect)
+			if (n + ifswap32(&input, ((struct segment_command *)lc)->nsects) >= symbol.n_sect)
 			{
 				elem_sym->ntype = symbol.n_type;
 				elem_sym->is_ext = symbol.n_type & N_EXT;
 				return (copy_sect_seg_name(input, elem_sym, ((struct segment_command *)lc), symbol.n_sect - n - 1));
 			}
-			n += ((struct segment_command *)lc)->nsects;
+			n += ifswap32(&input, ((struct segment_command *)lc)->nsects);
 		}
-		if (!(lc = secure_add_mv(input, lc, lc->cmdsize)))
+		if (!(lc = secure_add_mv(input, lc, ifswap32(&input, lc->cmdsize))))
 			return_error(input.path, ERR_MALFORMED, 1);
 	}
 	return (1);

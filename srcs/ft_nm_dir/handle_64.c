@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 12:16:54 by gpouyat           #+#    #+#             */
-/*   Updated: 2018/05/15 11:28:48 by gpouyat          ###   ########.fr       */
+/*   Updated: 2018/05/24 16:26:08 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,13 @@
 #include "ft_nm.h"
 #include <mach-o/nlist.h>
 
-static t_list		*create_sym_64(t_macho_input input, char *string_table, struct nlist_64 sym_table)
+static t_list		*create_sym_64(t_arch input, char *string_table, struct nlist_64 sym_table)
 {
 	t_sym	*elem_sym;
 	t_list	*elem;
 
+	if (input.is_swap)
+		swap_nlist_64(&sym_table);
 	if (!(elem_sym = (t_sym *)ft_memalloc(sizeof(t_sym))))
 	{
 		ft_dprintf(STDERR_FILENO, "ERROR MALLOC\n");
@@ -32,7 +34,7 @@ static t_list		*create_sym_64(t_macho_input input, char *string_table, struct nl
 	return (elem);
 }
 
-static t_list	*get_list_syms_64(struct symtab_command sym, t_macho_input input)
+static t_list	*get_list_syms_64(struct symtab_command sym, t_arch input)
 {
 	t_list			*list;
 	char			*string;
@@ -41,6 +43,8 @@ static t_list	*get_list_syms_64(struct symtab_command sym, t_macho_input input)
 
 	list = NULL;
 	index = -1;	
+	if (input.is_swap)
+		swap_symtab_command(&sym);
 	if (!(array = secure_add_mv(input, input.data, sym.symoff)))
 	{
 		ft_printf("%d - %s \n", __LINE__, __FILE__);
@@ -58,26 +62,25 @@ static t_list	*get_list_syms_64(struct symtab_command sym, t_macho_input input)
 	return(list);
 }
 
-int handler_64(t_macho_input input, void **list)
+int handler_64(t_arch *input)
 {
 	struct mach_header_64 header;
 	struct	symtab_command	*sym;
 
-	if (get_header_64(input, input.data, &header))
-		return(return_error(input.path, ERR_INVALID, 2));
-	input.ncmds = header.ncmds;
-	if (!(input.lc = secure_add_mv(input, input.data, sizeof(struct mach_header_64))))
-		return(return_error(input.path, ERR_INVALID, 2));
-	sym = get_symtab_cmd(input);
-	if (!sym)
-		return (2);
-	*list = get_list_syms_64(*sym, input);
-
-	while (*list)
+	if (get_header_64(*input, input->data, &header))
+		return(return_error(input->path, ERR_INVALID, 2));
+	ft_printf("HEADER: %x, %d\n", header.magic, header.ncmds);
+	input->ncmds = header.ncmds;
+	if (!(input->lc = secure_add_mv(*input, input->data, sizeof(struct mach_header_64))))
+		return(return_error(input->path, ERR_INVALID, 2));
+	if (!(sym = get_symtab_cmd(*input)))
+		return (1);
+	input->list = get_list_syms_64(*sym, *input);
+	while (input->list)
 	{
-		if (!(((t_sym *)(((t_list *)(*list))->content))->ntype & N_STAB))
-			ft_printf("%#0llx -(%s, %s) %s\n", ((t_sym *)(((t_list *)(*list))->content))->value, ((t_sym *)(((t_list *)(*list))->content))->segname, ((t_sym *)(((t_list *)(*list))->content))->sectname, ((t_sym *)(((t_list *)(*list))->content))->name);
-		*list = ((t_list *)(*list))->next;
+		if (!(((t_sym *)(((t_list *)(input->list))->content))->ntype & N_STAB))
+			ft_printf("%#0llx -(%s, %s) %s\n", ((t_sym *)(((t_list *)(input->list))->content))->value, ((t_sym *)(((t_list *)(input->list))->content))->segname, ((t_sym *)(((t_list *)(input->list))->content))->sectname, ((t_sym *)(((t_list *)(input->list))->content))->name);
+		input->list = ((t_list *)(input->list))->next;
 	}
 	
 	return (0);

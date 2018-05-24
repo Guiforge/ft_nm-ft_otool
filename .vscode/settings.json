@@ -8,6 +8,13 @@
         "libft.h": "c",
         "ft_nm.h": "c",
         "misc.h": "c",
-        "type_traits": "c"
+        "type_traits": "c",
+        "swap.h": "c",
+        "__bit_reference": "c",
+        "__functional_03": "c",
+        "functional": "c",
+        "memory": "c",
+        "tuple": "c",
+        "vector": "c"
     }
 }

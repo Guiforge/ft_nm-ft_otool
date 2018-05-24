@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/24 09:02:33 by gpouyat           #+#    #+#             */
-/*   Updated: 2018/05/15 11:34:56 by gpouyat          ###   ########.fr       */
+/*   Updated: 2018/05/24 14:26:52 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,6 @@
 #include "ft_nm.h"
 #include <sys/mman.h>
 
-/*  swapint32  ((__uint32_t)((((__uint32_t)(x) & 0xff000000) >> 24) | \
-                (((__uint32_t)(x) & 0x00ff0000) >>  8) | \
-                (((__uint32_t)(x) & 0x0000ff00) <<  8) | \
-                (((__uint32_t)(x) & 0x000000ff) << 24))):*/
 extern int g_optind;
 
 static int		intern_nm_help()
@@ -39,9 +35,8 @@ static int		intern_nm_parse_option(int ac, const char **av)
 	return (0);
 }
 
-static int fake_handler(t_macho_input input, void **list)
+static int fake_handler(t_arch *input)
 {
-	(void)list;
 	(void)input;
 	ft_printf("Fake Handler\n\n");
 	return (0);
@@ -49,7 +44,7 @@ static int fake_handler(t_macho_input input, void **list)
 
 static int one_file(const char *path, int print)
 {
-	t_macho_input		input_file;
+	t_arch		arch;
 	int					ret;
 	const t_handler_func handler_funcs[] = {
 		{M_32, &handler_32},
@@ -59,14 +54,14 @@ static int one_file(const char *path, int print)
 		{M_END, &fake_handler},
 	};
 
-	if (map_file(PROGNAME, path, &input_file) != 0)
+	if (map_file(PROGNAME, path, &arch) != 0)
 		return (1);
 	if (print)
 		ft_printf("\n%s:\n", path);
 	t_list	*list;
 	list = NULL;
-	ret = exec_handler(handler_funcs, input_file, (void **)&list);
-	munmap((void *)input_file.data, input_file.length);
+	ret = exec_handler(handler_funcs, &arch);
+	munmap((void *)arch.data, arch.length);
 	return (ret);
 }
 
