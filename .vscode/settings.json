@@ -15,6 +15,9 @@
         "functional": "c",
         "memory": "c",
         "tuple": "c",
-        "vector": "c"
+        "vector": "c",
+        "arch.h": "c",
+        "machine.h": "c",
+        "mach.h": "c"
     }
 }

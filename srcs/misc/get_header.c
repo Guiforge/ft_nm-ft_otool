@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/30 19:19:41 by gpouyat           #+#    #+#             */
-/*   Updated: 2018/05/24 14:49:01 by gpouyat          ###   ########.fr       */
+/*   Updated: 2018/05/29 08:02:10 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ int			get_header_fat(const t_arch input, void const *add, struct fat_header *hea
 	if (secure_add(input, add, sizeof(struct mach_header_64)))
 	{
 		*header = *(struct fat_header *)add;
+		if (input.is_swap)
+			swap_fat_header(header);
 		return (0);
 	}
 	return (1);

@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/24 14:11:23 by gpouyat           #+#    #+#             */
-/*   Updated: 2018/05/24 14:14:14 by gpouyat          ###   ########.fr       */
+/*   Updated: 2018/05/29 07:58:22 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,10 @@ void	swap_mach_header_64(struct mach_header_64 *mh)
 	mh->sizeofcmds = ft_swapInt32(mh->sizeofcmds);
 	mh->flags = ft_swapInt32(mh->flags);
 	mh->reserved = ft_swapInt32(mh->reserved);
+}
+
+void	swap_fat_header(struct fat_header *fh)
+{
+	fh->magic = ft_swapInt32(fh->magic);
+	fh->nfat_arch = ft_swapInt32(fh->nfat_arch);
 }

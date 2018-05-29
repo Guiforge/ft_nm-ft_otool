@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/23 22:52:36 by gpouyat           #+#    #+#             */
-/*   Updated: 2018/05/24 16:04:38 by gpouyat          ###   ########.fr       */
+/*   Updated: 2018/05/29 08:00:22 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,11 @@
 #include <mach-o/nlist.h>
 #include <ar.h>
 
+typedef enum	s_endian {
+	BIG,
+	LITTLE,
+	UNKNOWN
+}				t_endian;
 
 typedef enum s_type_macho {
 	M_32,
@@ -55,6 +60,7 @@ uint16_t ifswap16(t_arch *input, uint16_t x);
 uint32_t ifswap32(t_arch *input, uint32_t x);
 uint64_t ifswap64(t_arch *input, uint64_t x);
 
+void	swap_fat_header(struct fat_header *fh);
 void	swap_mach_header(struct mach_header *mh);
 void	swap_mach_header_64(struct mach_header_64 *mh);
 void	swap_symtab_command(struct symtab_command *st);

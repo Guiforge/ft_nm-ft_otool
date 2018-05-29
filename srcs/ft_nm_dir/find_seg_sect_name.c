@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/05 17:45:26 by gpouyat           #+#    #+#             */
-/*   Updated: 2018/05/24 16:12:04 by gpouyat          ###   ########.fr       */
+/*   Updated: 2018/05/29 11:23:03 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int		find_seg_sect_name_64(struct nlist_64 symbol, t_sym *elem_sym, t_arch input
 	i = 0;
 	n = 0;
 	lc = input.lc;
-	while (i++ < input.ncmds)
+	while (lc && i++ < input.ncmds)
 	{
 		if (ifswap32(&input, lc->cmd) == LC_SEGMENT_64)
 		{

@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 12:16:54 by gpouyat           #+#    #+#             */
-/*   Updated: 2018/05/24 16:26:08 by gpouyat          ###   ########.fr       */
+/*   Updated: 2018/05/29 11:53:15 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,20 +29,39 @@ static t_list		*create_sym_64(t_arch input, char *string_table, struct nlist_64 
 	}
 	elem_sym->name = secure_string(input, string_table, sym_table.n_un.n_strx);
 	elem_sym->value = sym_table.n_value;
-	find_seg_sect_name_64(sym_table, elem_sym, input);
+	if (find_seg_sect_name_64(sym_table, elem_sym, input))
+	{
+		free(elem_sym);
+		return (NULL);
+	}
 	elem = ft_lstnew(elem_sym, sizeof(t_sym));
 	return (elem);
 }
 
+static int	loop_get_list_sym_64(t_arch input, struct symtab_command sym, struct nlist_64 *array, char *string)
+{
+	int64_t		index;
+	t_list		*new;
+
+	index = -1;
+	while (++index < sym.nsyms)
+	{
+		new = create_sym_64(input, string, array[index]);
+		if (!new)
+		{
+			/*freeALL*/
+			return (1);
+		}
+		ft_lstpush(&(input.list), new);
+	}
+	return (0);
+}
+
 static t_list	*get_list_syms_64(struct symtab_command sym, t_arch input)
 {
-	t_list			*list;
 	char			*string;
 	struct nlist_64 *array;
-	int64_t		index;
 
-	list = NULL;
-	index = -1;	
 	if (input.is_swap)
 		swap_symtab_command(&sym);
 	if (!(array = secure_add_mv(input, input.data, sym.symoff)))
@@ -57,9 +76,9 @@ static t_list	*get_list_syms_64(struct symtab_command sym, t_arch input)
 		print_error(input.path, ERR_UNDIFINED);
 		return (NULL);
 	}
-	while (++index < sym.nsyms)
-		ft_lstpush(&list, create_sym_64(input, string, array[index]));
-	return(list);
+	if (!loop_get_list_sym_64(input, sym, array, string))
+		return(input.list);
+	return (NULL);
 }
 
 int handler_64(t_arch *input)
@@ -76,6 +95,8 @@ int handler_64(t_arch *input)
 	if (!(sym = get_symtab_cmd(*input)))
 		return (1);
 	input->list = get_list_syms_64(*sym, *input);
+	if (!input->list)
+		return (1);
 	while (input->list)
 	{
 		if (!(((t_sym *)(((t_list *)(input->list))->content))->ntype & N_STAB))

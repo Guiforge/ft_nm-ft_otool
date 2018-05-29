@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/23 22:52:36 by gpouyat           #+#    #+#             */
-/*   Updated: 2018/05/24 14:26:13 by gpouyat          ###   ########.fr       */
+/*   Updated: 2018/05/29 09:42:52 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void	print_error(const char *path, t_type_err type);
 int		return_error(const char *path, t_type_err type, int ret);
 int		handler_64(t_arch *input);
 int		handler_32(t_arch *input);
+int		handle_fat(t_arch *input);
 char	get_sim_type(struct nlist_64 sym, t_arch input);
 
 int		find_seg_sect_name_64(struct nlist_64 symbol, t_sym *elem_sym, t_arch input);

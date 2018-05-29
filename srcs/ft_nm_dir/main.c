@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/24 09:02:33 by gpouyat           #+#    #+#             */
-/*   Updated: 2018/05/24 14:26:52 by gpouyat          ###   ########.fr       */
+/*   Updated: 2018/05/29 09:56:53 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static int		intern_nm_parse_option(int ac, const char **av)
 static int fake_handler(t_arch *input)
 {
 	(void)input;
-	ft_printf("Fake Handler\n\n");
+	ft_printf("fake handler");
 	return (0);
 }
 
@@ -49,7 +49,7 @@ static int one_file(const char *path, int print)
 	const t_handler_func handler_funcs[] = {
 		{M_32, &handler_32},
 		{M_64, &handler_64},
-		{M_FAT, &fake_handler},
+		{M_FAT, &handle_fat},
 		{M_LIB, &fake_handler},
 		{M_END, &fake_handler},
 	};

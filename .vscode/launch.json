@@ -10,7 +10,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/ft_nm",
-            "args": ["./binary_test/hell/test_moins_facile"],
+            "args": ["./binaries/corrupt/audiodevice_corupted"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],
