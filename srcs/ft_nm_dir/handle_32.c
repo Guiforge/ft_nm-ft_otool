@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 12:16:54 by gpouyat           #+#    #+#             */
-/*   Updated: 2018/05/29 11:51:11 by gpouyat          ###   ########.fr       */
+/*   Updated: 2018/05/31 19:17:56 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ static t_list		*create_sym(t_arch input, char *string_table, struct nlist sym_ta
 	}
 	elem_sym->name = secure_string(input, string_table, sym_table.n_un.n_strx);
 	elem_sym->value = sym_table.n_value;
+	elem_sym->arch = ARCH_32;
 	if (find_seg_sect_name(sym_table, elem_sym, input))
 	{
 		free(elem_sym);
@@ -38,22 +39,25 @@ static t_list		*create_sym(t_arch input, char *string_table, struct nlist sym_ta
 	return (elem);
 }
 
-static int	loop_get_list_sym(t_arch input, struct symtab_command sym, struct nlist *array, char *string)
+static int	loop_get_list_sym(t_arch *input, struct symtab_command sym, struct nlist *array, char *string)
 {
 	int64_t		index;
 	t_list		*new;
+	t_list		*lst;
 
+	lst = NULL;
 	index = -1;
 	while (++index < sym.nsyms)
 	{
-		new = create_sym(input, string, array[index]);
+		new = create_sym(*input, string, array[index]);
 		if (!new)
 		{
 			/*freeALL*/
 			return (1);
 		}
-		ft_lstpush(&(input.list), new);
+		ft_lstpush(&lst, new);
 	}
+	input->list = lst;
 	return (0);
 }
 
@@ -76,7 +80,7 @@ static t_list	*get_list_syms(struct symtab_command sym, t_arch input)
 		print_error(input.path, ERR_UNDIFINED);
 		return (NULL);
 	}
-	if (!loop_get_list_sym(input, sym, array, string))
+	if (!loop_get_list_sym(&input, sym, array, string))
 		return(input.list);
 	return (NULL);
 }
@@ -88,8 +92,9 @@ int handler_32(t_arch *input)
 
 	if (get_header_32(*input, input->data, &header))
 		return(return_error(input->path, ERR_INVALID, 2));
-	ft_printf("HEADER: %x, %d\n", header.magic, header.ncmds);
 	input->ncmds = header.ncmds;
+	input->cpu_type = header.cputype;
+	input->cpu_subtype = header.cpusubtype;
 	if (!(input->lc = secure_add_mv(*input, input->data, sizeof(struct mach_header))))
 		return(return_error(input->path, ERR_INVALID, 2));
 	if (!(sym = get_symtab_cmd(*input)))
@@ -97,12 +102,6 @@ int handler_32(t_arch *input)
 	input->list = get_list_syms(*sym, *input);
 	if (!input->list)
 		return (1);
-	while (input->list)
-	{
-		if (!(((t_sym *)(((t_list *)(input->list))->content))->ntype & N_STAB))
-			ft_printf("%#0llx -(%s, %s) %s\n", ((t_sym *)(((t_list *)(input->list))->content))->value, ((t_sym *)(((t_list *)(input->list))->content))->segname, ((t_sym *)(((t_list *)(input->list))->content))->sectname, ((t_sym *)(((t_list *)(input->list))->content))->name);
-		input->list = ((t_list *)(input->list))->next;
-	}
-	
+	print_nm(input);
 	return (0);
 }

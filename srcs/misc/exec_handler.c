@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/30 19:07:05 by gpouyat           #+#    #+#             */
-/*   Updated: 2018/05/29 09:56:48 by gpouyat          ###   ########.fr       */
+/*   Updated: 2018/05/29 17:41:46 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,8 @@ static t_type_macho which_header(t_arch *arch)
 		return (M_32);
 	else if (magic == FAT_MAGIC || magic == FAT_CIGAM)
 		return (M_FAT);
-	
 	else if (magic == FAT_CIGAM_64 || magic == FAT_MAGIC_64)
-	{
-		ft_printf("STOP !!! %s\n", arch->path);
-	}
-	
+		return (M_FAT_64);	
 	else if (secure_add(*arch, arch->data, SARMAG) && !ft_strncmp(ARMAG, (char *)arch->data, SARMAG))
 		return (M_LIB);
 	return (M_ERR);

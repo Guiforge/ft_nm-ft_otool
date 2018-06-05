@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/23 22:52:36 by gpouyat           #+#    #+#             */
-/*   Updated: 2018/05/29 08:00:22 by gpouyat          ###   ########.fr       */
+/*   Updated: 2018/05/31 19:51:29 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ typedef enum s_type_macho {
 	M_32,
 	M_64,
 	M_FAT,
+	M_FAT_64,
 	M_LIB,
 	M_END,
 	M_ERR
@@ -41,6 +42,8 @@ typedef struct	s_arch {
 	size_t					length;
 	uint32_t				magic;
 	t_bool					is_swap;
+	cpu_type_t				cpu_type;
+	cpu_subtype_t			cpu_subtype;
 	struct load_command		*lc;
 	t_list					*list;
 	uint32_t				ncmds;
@@ -80,5 +83,14 @@ int				get_header_fat(const t_arch arch, const void *add, struct fat_header *hea
 int				get_header_lib(const t_arch arch, const void *add, struct ar_hdr *header);
 int				exec_handler(const t_handler_func funcs[], t_arch *arch);
 
+typedef struct s_arch_info
+{
+    const char *name;
+    cpu_type_t cputype;
+    cpu_subtype_t cpusubtype;
+    t_endian byte_order;
+} t_arch_info;
+
+t_arch_info getArchInfoFromCpuType(cpu_type_t cputype, cpu_subtype_t cpusubtype);
 
 #endif

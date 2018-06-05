@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/27 17:02:58 by gpouyat           #+#    #+#             */
-/*   Updated: 2018/05/29 07:49:37 by gpouyat          ###   ########.fr       */
+/*   Updated: 2018/05/31 19:52:14 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,6 @@
 #include <mach-o/fat.h>
 #include "libft.h"
 #include "misc.h"
-
-typedef struct s_arch_info
-{
-    const char *name;
-    cpu_type_t cputype;
-    cpu_subtype_t cpusubtype;
-    t_endian byte_order;
-} t_arch_info;
 
 static const t_arch_info arch_info_table[] = {
 	{"any",			CPU_TYPE_ANY,		CPU_SUBTYPE_MULTIPLE,		UNKNOWN	},
@@ -81,7 +73,7 @@ static const t_arch_info arch_info_table[] = {
 };
 
 
-const t_arch_info getArchInfoFromCpuType(cpu_type_t cputype,
+t_arch_info getArchInfoFromCpuType(cpu_type_t cputype,
 													cpu_subtype_t cpusubtype)
 {
 	int		index;

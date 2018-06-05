@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/30 19:19:41 by gpouyat           #+#    #+#             */
-/*   Updated: 2018/05/29 08:02:10 by gpouyat          ###   ########.fr       */
+/*   Updated: 2018/06/01 09:49:20 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,9 @@ int			get_header_fat(const t_arch input, void const *add, struct fat_header *hea
 
 int			get_header_lib(const t_arch input, void const *add, struct ar_hdr *header)
 {
-	if (secure_add(input, add, sizeof(struct mach_header_64)))
+	if (secure_add(input, add, sizeof(struct ar_hdr) + SARMAG))
 	{
-		*header = *(struct ar_hdr *)add;
+		*header = *(struct ar_hdr *)((void *)add + SARMAG);
 		return (0);
 	}
 	return (1);

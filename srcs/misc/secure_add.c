@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/24 19:03:50 by gpouyat           #+#    #+#             */
-/*   Updated: 2018/05/23 17:46:30 by gpouyat          ###   ########.fr       */
+/*   Updated: 2018/06/03 14:35:37 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	*secure_add(t_arch input, const void *start_add, size_t length)
 	
 	start = (uint8_t *) start_add - (uint8_t *) input.data;
 	diff = (input.data + input.length) - (start_add + length);
-	if (start + length > input.length || diff <= 0)
+	if (start + length > input.length || diff < 0)
 		return (NULL);
 	return ((void *)start_add);
 }
@@ -39,7 +39,6 @@ char		*secure_string(t_arch input, char *string_table, uint32_t offset)
 	i = 0;
 	if (!(ret = secure_add_mv(input, (void *)string_table, offset)))
 		return (NULL);
-
 	while(ret[i++])
 		if (!secure_add(input, (void *)ret, i))
 			return (NULL);

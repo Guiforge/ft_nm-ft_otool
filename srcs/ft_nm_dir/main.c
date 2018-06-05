@@ -6,15 +6,24 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/24 09:02:33 by gpouyat           #+#    #+#             */
-/*   Updated: 2018/05/29 09:56:53 by gpouyat          ###   ########.fr       */
+/*   Updated: 2018/06/03 11:07:40 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "ft_nm.h"
 #include <sys/mman.h>
+# include <ar.h>
+#include <mach-o/ranlib.h>
 
 extern int g_optind;
+
+static int fake_handler(t_arch *input)
+{
+	(void)input;	
+	ft_putendl("FAKE HANDLE");
+	return (0);
+}
 
 static int		intern_nm_help()
 {
@@ -22,25 +31,6 @@ static int		intern_nm_help()
 	return (1);
 }
 
-static int		intern_nm_parse_option(int ac, const char **av)
-{
-	int opt;
-	while((opt = ft_getopt(ac, av, "h")) != -1)
-	{
-		if (opt == 'h')
-			return (intern_nm_help());
-		if (opt == '?')
-			return (1);
-	}
-	return (0);
-}
-
-static int fake_handler(t_arch *input)
-{
-	(void)input;
-	ft_printf("fake handler");
-	return (0);
-}
 
 static int one_file(const char *path, int print)
 {
@@ -50,7 +40,7 @@ static int one_file(const char *path, int print)
 		{M_32, &handler_32},
 		{M_64, &handler_64},
 		{M_FAT, &handle_fat},
-		{M_LIB, &fake_handler},
+		{M_LIB, &handle_lib},
 		{M_END, &fake_handler},
 	};
 
@@ -60,6 +50,7 @@ static int one_file(const char *path, int print)
 		ft_printf("\n%s:\n", path);
 	t_list	*list;
 	list = NULL;
+	get_nm_flags()->print_arch = False;
 	ret = exec_handler(handler_funcs, &arch);
 	munmap((void *)arch.data, arch.length);
 	return (ret);
@@ -83,7 +74,7 @@ static int loop_files(const char *paths[])
 int main(int ac, const char **av)
 {
 	if (intern_nm_parse_option(ac, av))
-		return (1);
+		return (intern_nm_help());
 	if (ac > g_optind + 1)
 		return (loop_files(&av[g_optind]));
 	else if (av[g_optind])
