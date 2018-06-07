@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/05 17:45:26 by gpouyat           #+#    #+#             */
-/*   Updated: 2018/05/31 15:30:58 by gpouyat          ###   ########.fr       */
+/*   Updated: 2018/06/05 23:04:43 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ static int		copy_sect_seg_name_64(t_arch input, t_sym *elem_sym, struct segment_
 		return (return_error(input.path, ERR_UNDIFINED, 1));
 	if (!(sect = secure_add_mv(input, sect, index * sizeof(struct section_64))))
 		return (return_error(input.path, ERR_UNDIFINED, 1));
-	if (secure_add(input, segment->segname, 16))
-		ft_memcpy(elem_sym->segname, segment->segname, 16);
+	if (secure_add(input, sect->segname, 16))
+		ft_memcpy(elem_sym->segname, sect->segname, 16);
 	if (ifswap32(&input,segment->nsects) > 0 && secure_add(input, sect->sectname, 16))
 		ft_memcpy(elem_sym->sectname, sect->sectname, 16);
 	else
@@ -66,8 +66,8 @@ static int		copy_sect_seg_name(t_arch input, t_sym *elem_sym, struct segment_com
 		return (return_error(input.path, ERR_UNDIFINED, 1));
 	if (!(sect = secure_add_mv(input, sect, index * sizeof(struct section))))
 		return (return_error(input.path, ERR_UNDIFINED, 1));
-	if (secure_add(input, segment->segname, 16))
-		ft_memcpy(elem_sym->segname, segment->segname, 16);
+	if (secure_add(input, sect->segname, 16))
+		ft_memcpy(elem_sym->segname, sect->segname, 16);
 	if (segment->nsects > 0 && secure_add(input, sect->sectname, 16))
 		ft_memcpy(elem_sym->sectname, sect->sectname, 16);
 	else

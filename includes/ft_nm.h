@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/23 22:52:36 by gpouyat           #+#    #+#             */
-/*   Updated: 2018/06/03 13:53:52 by gpouyat          ###   ########.fr       */
+/*   Updated: 2018/06/07 18:00:48 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,5 +85,7 @@ struct symtab_command	*get_symtab_cmd(t_arch input);
 
 void	print_nm(t_arch *input);
 void	print_m(t_sym sym);
+
+void	sort_sym(t_list **lst_sym);
 
 #endif

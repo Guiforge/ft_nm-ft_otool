@@ -6,7 +6,7 @@
 #    By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/04/23 09:03:46 by gpouyat           #+#    #+#              #
-#    Updated: 2018/06/03 13:54:35 by gpouyat          ###   ########.fr        #
+#    Updated: 2018/06/07 18:00:06 by gpouyat          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,7 +45,7 @@ OBJ_PATH_NM = ./obj/nm
 OBJ_PATH_OTOOL = ./obj/otool
 OBJ_PATH_MISC = ./obj/misc
 
-SRC_NAME_NM = main.c error.c handle_64.c handle_32.c find_seg_sect_name.c get_symtab_cmd.c handle_fat.c print.c print_nm.c flags.c handle_lib.c create.c
+SRC_NAME_NM = main.c error.c handle_64.c handle_32.c find_seg_sect_name.c get_symtab_cmd.c handle_fat.c print.c print_nm.c flags.c handle_lib.c create.c sort.c
 
 SRC_NAME_OTOOL = main.c
 

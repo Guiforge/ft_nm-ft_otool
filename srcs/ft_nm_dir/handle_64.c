@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 12:16:54 by gpouyat           #+#    #+#             */
-/*   Updated: 2018/05/31 19:47:56 by gpouyat          ###   ########.fr       */
+/*   Updated: 2018/06/07 18:01:15 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ int handler_64(t_arch *input)
 	input->list = get_list_syms_64(*sym, *input);
 	if (!input->list)
 		return (1);
+	sort_sym(&(input->list));
 	print_nm(input);
 	return (0);
 }

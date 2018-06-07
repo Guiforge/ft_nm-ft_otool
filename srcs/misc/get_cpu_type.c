@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/27 17:02:58 by gpouyat           #+#    #+#             */
-/*   Updated: 2018/05/31 19:52:14 by gpouyat          ###   ########.fr       */
+/*   Updated: 2018/06/07 14:53:48 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,15 +59,15 @@ static const t_arch_info arch_info_table[] = {
 	{"ppc604", 		CPU_TYPE_POWERPC,	CPU_SUBTYPE_POWERPC_604,	BIG		},
 	{"ppc604e",		CPU_TYPE_POWERPC,	CPU_SUBTYPE_POWERPC_604e,	BIG		},
 	{"ppc64",		CPU_TYPE_POWERPC64,	CPU_SUBTYPE_POWERPC_ALL,	BIG		},
-	{"ppc7400",		CPU_TYPE_POWERPC,	CPU_SUBTYPE_POWERPC_7400,	BIG		},
 	{"ppc7450",		CPU_TYPE_POWERPC,	CPU_SUBTYPE_POWERPC_7450,	BIG		},
 	{"ppc750",		CPU_TYPE_POWERPC,	CPU_SUBTYPE_POWERPC_750,	BIG		},
 	{"ppc970",		CPU_TYPE_POWERPC,	CPU_SUBTYPE_POWERPC_970,	BIG		},
 	{"ppc970-64",	CPU_TYPE_POWERPC64,	CPU_SUBTYPE_POWERPC_970,	BIG		},
 	{"sparc",		CPU_TYPE_SPARC,		CPU_SUBTYPE_SPARC_ALL,		BIG		},
 	{"x86_64",		CPU_TYPE_X86_64,	CPU_SUBTYPE_X86_64_ALL,		LITTLE	},
-	{"x86_64h",		CPU_TYPE_I386,		CPU_SUBTYPE_X86_64_H,		LITTLE	},
-	{"x86_64h",		CPU_TYPE_X86_64,	CPU_SUBTYPE_X86_64_H,		LITTLE	},
+	{"x86_64",		CPU_TYPE_X86_64,	0x80000003,					LITTLE	},
+	{"x86_64",		CPU_TYPE_I386,		CPU_SUBTYPE_X86_64_H,		LITTLE	},
+	{"x86_64",		CPU_TYPE_X86_64,	CPU_SUBTYPE_X86_64_H,		LITTLE	},
 	{"xscale",		CPU_TYPE_ARM,		CPU_SUBTYPE_ARM_XSCALE,		LITTLE	},
 	{NULL,			0,					0,							0		}
 };
@@ -77,7 +77,7 @@ t_arch_info getArchInfoFromCpuType(cpu_type_t cputype,
 													cpu_subtype_t cpusubtype)
 {
 	int		index;
-
+	
 	index = -1;
 	while (arch_info_table[++index].name)
 	{

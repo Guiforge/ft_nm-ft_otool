@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/23 22:52:36 by gpouyat           #+#    #+#             */
-/*   Updated: 2018/05/31 19:51:29 by gpouyat          ###   ########.fr       */
+/*   Updated: 2018/06/07 14:58:19 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,26 @@
 #include <mach-o/fat.h>
 #include <mach-o/nlist.h>
 #include <ar.h>
+
+#ifdef __i386__
+	# define GET_ARCH "i386"
+#endif
+
+#ifdef __x86_64__
+	# define GET_ARCH "x86_64"
+#endif
+
+#ifdef __ppc__
+	# define GET_ARCH "ppc"
+#endif
+
+#ifndef __i386__
+	#ifndef __ppc__ 
+		#ifndef __x86_64__
+			# define GET_ARCH ""
+		#endif
+	#endif
+#endif
 
 typedef enum	s_endian {
 	BIG,
@@ -82,6 +102,7 @@ int				get_header_64(const t_arch arch, const void *add, struct mach_header_64 *
 int				get_header_fat(const t_arch arch, const void *add, struct fat_header *header);
 int				get_header_lib(const t_arch arch, const void *add, struct ar_hdr *header);
 int				exec_handler(const t_handler_func funcs[], t_arch *arch);
+t_type_macho 	which_header(t_arch *arch);
 
 typedef struct s_arch_info
 {

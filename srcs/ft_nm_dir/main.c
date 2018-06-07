@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/24 09:02:33 by gpouyat           #+#    #+#             */
-/*   Updated: 2018/06/03 11:07:40 by gpouyat          ###   ########.fr       */
+/*   Updated: 2018/06/07 16:54:38 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static int one_file(const char *path, int print)
 
 	if (map_file(PROGNAME, path, &arch) != 0)
 		return (1);
-	if (print)
+	if (print && which_header(&arch) != M_FAT && which_header(&arch) != M_LIB)
 		ft_printf("\n%s:\n", path);
 	t_list	*list;
 	list = NULL;

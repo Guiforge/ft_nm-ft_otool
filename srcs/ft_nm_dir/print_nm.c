@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/30 11:19:00 by gpouyat           #+#    #+#             */
-/*   Updated: 2018/06/01 09:42:12 by gpouyat          ###   ########.fr       */
+/*   Updated: 2018/06/07 09:04:53 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,12 @@ static t_bool	print_cpu_type(t_arch *input)
 	const char	*name;
 
 	name = getArchInfoFromCpuType(input->cpu_type, input->cpu_subtype).name;
+	if (name && !ft_strcmp(name, GET_ARCH))
+		return (False);
 	if (!name)
 	{
-		ft_putchar_fd('\n', STDERR_FILENO);
-		print_error(input->path, ERR_MALFORMED);
-		return (True);
+		ft_printf("\n%s (for architecture ):\n", input->path);
+		return (False);
 	}
 	ft_printf("\n%s (for architecture %s):\n", input->path, name);
 	return (False);

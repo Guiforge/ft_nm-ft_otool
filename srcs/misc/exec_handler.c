@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/30 19:07:05 by gpouyat           #+#    #+#             */
-/*   Updated: 2018/05/29 17:41:46 by gpouyat          ###   ########.fr       */
+/*   Updated: 2018/06/07 14:58:23 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include <ar.h>
 #include "misc.h"
 
-static t_type_macho which_header(t_arch *arch)
+t_type_macho which_header(t_arch *arch)
 {
 	uint32_t		magic;
 
