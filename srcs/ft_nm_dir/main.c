@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/24 09:02:33 by gpouyat           #+#    #+#             */
-/*   Updated: 2018/06/07 16:54:38 by gpouyat          ###   ########.fr       */
+/*   Updated: 2018/06/09 18:52:57 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,6 @@
 #include <mach-o/ranlib.h>
 
 extern int g_optind;
-
-static int fake_handler(t_arch *input)
-{
-	(void)input;	
-	ft_putendl("FAKE HANDLE");
-	return (0);
-}
 
 static int		intern_nm_help()
 {
@@ -36,14 +29,9 @@ static int one_file(const char *path, int print)
 {
 	t_arch		arch;
 	int					ret;
-	const t_handler_func handler_funcs[] = {
-		{M_32, &handler_32},
-		{M_64, &handler_64},
-		{M_FAT, &handle_fat},
-		{M_LIB, &handle_lib},
-		{M_END, &fake_handler},
-	};
+	t_handler_func *handler_funcs;
 
+	handler_funcs = get_nm_flags()->funcs;
 	if (map_file(PROGNAME, path, &arch) != 0)
 		return (1);
 	if (print && which_header(&arch) != M_FAT && which_header(&arch) != M_LIB)
@@ -52,7 +40,10 @@ static int one_file(const char *path, int print)
 	list = NULL;
 	get_nm_flags()->print_arch = False;
 	ret = exec_handler(handler_funcs, &arch);
+	if (ret == 2)
+		print_error(arch.path, ERR_INVALID);
 	munmap((void *)arch.data, arch.length);
+	ft_secu_free_lvl(MALLOC_LVL_FILE_MACH_O);
 	return (ret);
 }
 

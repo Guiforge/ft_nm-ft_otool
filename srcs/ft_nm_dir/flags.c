@@ -6,11 +6,19 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/30 11:24:59 by gpouyat           #+#    #+#             */
-/*   Updated: 2018/05/31 15:41:44 by gpouyat          ###   ########.fr       */
+/*   Updated: 2018/06/09 20:00:07 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_nm.h"
+
+const t_handler_func handler_funcs[] = {
+	{M_32, &handler_32},
+	{M_64, &handler_64},
+	{M_FAT, &handle_fat},
+	{M_LIB, &handle_lib},
+	{M_END, NULL},
+};
 
 static t_nm_flags	flags = {
 	False,
@@ -23,7 +31,8 @@ static t_nm_flags	flags = {
 	False,
 	False,
 	False,
-	False
+	False,
+	(t_handler_func *)handler_funcs
 };
 
 t_nm_flags		*get_nm_flags()
@@ -40,7 +49,7 @@ void	simple_option(char opt)
 	else if (opt == 'n')
 		flags.n = True;
 	else if (opt == 'r')
-		flags.r = False;
+		flags.r = True;
 	else if (opt == 'm')
 		flags.m = True;
 	else if (opt == 'j')

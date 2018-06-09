@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/05 17:45:26 by gpouyat           #+#    #+#             */
-/*   Updated: 2018/06/05 23:04:43 by gpouyat          ###   ########.fr       */
+/*   Updated: 2018/06/09 18:42:52 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int		find_seg_sect_name_64(struct nlist_64 symbol, t_sym *elem_sym, t_arch input
 			tot += ifswap32(&input, ((struct segment_command_64 *)lc)->nsects);
 		}
 		if (!(lc = secure_add_mv(input, lc, ifswap32(&input, lc->cmdsize))))
-			return_error(input.path, ERR_MALFORMED, 1);
+			return(return_error(input.path, ERR_MALFORMED, 1));
 	}
 	return (0);
 }

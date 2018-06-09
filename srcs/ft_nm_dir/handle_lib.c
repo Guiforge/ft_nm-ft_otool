@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/03 10:41:28 by gpouyat           #+#    #+#             */
-/*   Updated: 2018/06/07 17:30:16 by gpouyat          ###   ########.fr       */
+/*   Updated: 2018/06/09 18:14:30 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,36 +29,28 @@ static void *go_end_string_table(t_arch *input, void *start)
 	return (NULL);
 }
 
-static int handle_lib_object(t_arch *input, void *offset)
+static void new_tmp(t_arch *tmp, size_t length, void *offset, t_arch *input)
+{
+	tmp->data = secure_add_mv(*input, offset, ft_next_multiple(ft_atoi(offset + 3) + sizeof(struct ar_hdr), 8));
+	tmp->length = length;
+	tmp->path = input->path;
+}
+
+static int handle_lib_objects(t_arch *input, void *offset)
 {
 	t_arch	*tmp;
-	size_t	tmp_size;
-	const t_handler_func handler_funcs[] = {
-		{M_32, &handler_32},
-		{M_64, &handler_64},
-		{M_END, NULL}
-	};
+	t_handler_func *handler_funcs;
+
+	handler_funcs = get_nm_flags()->funcs;
 	tmp = NULL;
-	int	toto;
 	while (offset || !secure_add(*input, offset, sizeof(struct ar_hdr)))
 	{
-		tmp_size = ft_atoi(((struct ar_hdr *)offset)->ar_size);
-
-		if (!(tmp = (t_arch *)ft_memalloc(sizeof(t_arch))))
+		if (!(tmp = (t_arch *)ft_secu_malloc_lvl(sizeof(t_arch), MALLOC_LVL_FILE_MACH_O)))
 			return (return_error(input->path, ERR_UNDIFINED, 1));
-
 		if (!secure_string(*input, offset, 0))
 			return (return_error(input->path, ERR_MALFORMED, 1));
-
-		char tutu[3];
-		ft_memcpy(tutu, offset+ 3, 2);
-		tutu[2] = 0;
-		toto = ft_atoi(tutu) + sizeof(struct ar_hdr);
-		tmp->data = secure_add_mv(*input, offset, ft_next_multiple(toto, 8));
-		tmp->length = tmp_size;
-		tmp->path = input->path;
-
-		if (!tmp->data || !(secure_add(*input, tmp->data, tmp->length - ft_atoi(tutu))) || !secure_string(*input, offset + sizeof(struct ar_hdr), 0))
+		new_tmp(tmp, ft_atoi(((struct ar_hdr *)offset)->ar_size), offset, input);
+		if (!tmp->data || !(secure_add(*input, tmp->data, tmp->length - ft_atoi(offset + 3))) || !secure_string(*input, offset + sizeof(struct ar_hdr), 0))
 		 	return (return_error(input->path, ERR_MALFORMED, 1));
 		ft_printf("\n%s(%s):\n", input->path, offset + sizeof(struct ar_hdr));
 		if (exec_handler(handler_funcs, tmp) == 2)
@@ -83,14 +75,7 @@ static int handle_lib_32(t_arch *input)
 		return (return_error(input->path, ERR_MALFORMED, 1));	
 	if (!(offset = go_end_string_table(input, offset)))
 		return (return_error(input->path, ERR_INVALID, 1));	
-	return (handle_lib_object(input, offset));
-}
-
-static int handle_lib_64(t_arch *input)
-{
-	(void)input;
-	ft_putendl("LIB 64");	
-	return (0);
+	return (handle_lib_objects(input, offset));
 }
 
 int handle_lib(t_arch *input)
@@ -101,9 +86,10 @@ int handle_lib(t_arch *input)
 		return (return_error(input->path, ERR_MALFORMED, 1));
 	if (!secure_add(*input, copy_add, AR_LONG_NAME))
 		return (return_error(input->path, ERR_MALFORMED, 1));
-	if (!ft_strncmp(SYMDEF, copy_add, AR_LONG_NAME) || !ft_strncmp(SYMDEF_SORTED, copy_add, AR_LONG_NAME))
+	if (!ft_strncmp(SYMDEF, copy_add, AR_LONG_NAME) ||
+		!ft_strncmp(SYMDEF_SORTED, copy_add, AR_LONG_NAME) ||
+		!ft_strncmp(SYMDEF_64, copy_add, AR_LONG_NAME) ||
+		!ft_strncmp(SYMDEF_64_SORTED, copy_add, AR_LONG_NAME))
 		return (handle_lib_32(input));
-	else if (!ft_strncmp(SYMDEF_64, copy_add, AR_LONG_NAME) || !ft_strncmp(SYMDEF_64_SORTED, copy_add, AR_LONG_NAME))
-		return (handle_lib_64(input));
 	return (return_error(input->path, ERR_INVALID, 1));
 }

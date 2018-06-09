@@ -33,6 +33,18 @@
         "hash_map": "c",
         "map": "c",
         "unordered_map": "c",
-        "hashtable": "c"
+        "hashtable": "c",
+        "__functional_base": "c",
+        "__functional_base_03": "c",
+        "__tuple": "c",
+        "chrono": "c",
+        "limits": "c",
+        "ratio": "c",
+        "utility": "c",
+        "ios": "c",
+        "atomic": "c",
+        "bitset": "c",
+        "deque": "c",
+        "system_error": "c"
     }
 }

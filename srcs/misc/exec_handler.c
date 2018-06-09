@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/30 19:07:05 by gpouyat           #+#    #+#             */
-/*   Updated: 2018/06/07 14:58:23 by gpouyat          ###   ########.fr       */
+/*   Updated: 2018/06/07 23:27:31 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int		exec_handler(const t_handler_func funcs[], t_arch *arch)
 	if (type == M_ERR)
 	{
 		return (2);
-	}
+	}	
 	while (funcs[++index].type != M_END)
 		if (funcs[index].type == type)
 			return (funcs[index].f(arch));

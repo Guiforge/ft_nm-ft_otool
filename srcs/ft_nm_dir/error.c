@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/01 09:53:13 by gpouyat           #+#    #+#             */
-/*   Updated: 2018/06/07 17:04:42 by gpouyat          ###   ########.fr       */
+/*   Updated: 2018/06/09 18:34:33 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 
 void	print_error(const char *path, t_type_err type)
 {
-		char *seg = NULL;
-		*seg = 't';
+		// char *seg = NULL;
+		// *seg = 't';
 	if (type == ERR_INVALID)
 		ft_dprintf(STDERR_FILENO, ERR_INVALID_FMT, PROGNAME, path);
 	else if (type == ERR_MALFORMED)

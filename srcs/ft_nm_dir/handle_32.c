@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 12:16:54 by gpouyat           #+#    #+#             */
-/*   Updated: 2018/06/07 18:01:08 by gpouyat          ###   ########.fr       */
+/*   Updated: 2018/06/09 18:23:35 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static t_list		*create_sym(t_arch input, char *string_table, struct nlist sym_ta
 
 	if (input.is_swap)
 		swap_nlist(&sym_table);
-	if (!(elem_sym = (t_sym *)ft_memalloc(sizeof(t_sym))))
+	if (!(elem_sym = (t_sym *)ft_secu_malloc_lvl(sizeof(t_sym), MALLOC_LVL_FILE_MACH_O)))
 	{
 		ft_dprintf(STDERR_FILENO, "ERROR MALLOC\n");
 		return(NULL);
@@ -70,14 +70,12 @@ static t_list	*get_list_syms(struct symtab_command sym, t_arch input)
 		swap_symtab_command(&sym);
 	if (!(array = secure_add_mv(input, input.data, sym.symoff)))
 	{
-		ft_printf("%d - %s \n", __LINE__, __FILE__);
-		print_error(input.path, ERR_UNDIFINED);
+		print_error(input.path, ERR_MALFORMED);
 		return (NULL);
 	}
 	if (!(string = secure_add_mv(input, input.data, sym.stroff)))
 	{
-		ft_printf("%d - %s \n", __LINE__, __FILE__);
-		print_error(input.path, ERR_UNDIFINED);
+		print_error(input.path, ERR_MALFORMED);
 		return (NULL);
 	}
 	if (!loop_get_list_sym(&input, sym, array, string))

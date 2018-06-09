@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 17:45:09 by gpouyat           #+#    #+#             */
-/*   Updated: 2018/06/05 23:08:35 by gpouyat          ###   ########.fr       */
+/*   Updated: 2018/06/08 09:48:46 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,21 +47,23 @@ char get_char_type(t_sym sym)
 		return(if_upper('a', sym.ntype));
 	else if (type == N_SECT && sym.nsect != NO_SECT && sym.nsect <= MAX_SECT)
 		return(find_sect_type(sym));
+	else if (type == N_INDR)
+		return(if_upper('i', sym.ntype));
 	return (if_upper('?', sym.ntype));
 }
 
-void print_value(t_sym sym)
+void print_value(t_sym sym, char c)
 {
 	if (sym.arch == ARCH_64)
 	{
-		if (!(sym.ntype & N_EXT) || sym.value || (sym.ntype & N_TYPE) == N_SECT)
+		if ((!(sym.ntype & N_EXT) || sym.value || (sym.ntype & N_TYPE) == N_SECT || c == 'A') && c != 'I')
 			ft_printf("%016llx", sym.value);
 		else
 			ft_putstr("                ");
 	}
 	else
 	{
-		if (!(sym.ntype & N_EXT) || sym.value || (sym.ntype & N_TYPE) == N_SECT)
+		if ((!(sym.ntype & N_EXT) || sym.value || (sym.ntype & N_TYPE) == N_SECT || c == 'A' ) && c != 'I')
 			ft_printf("%08llx", sym.value);
 		else
 			ft_putstr("        ");

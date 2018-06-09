@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/23 22:52:36 by gpouyat           #+#    #+#             */
-/*   Updated: 2018/06/07 18:00:48 by gpouyat          ###   ########.fr       */
+/*   Updated: 2018/06/09 18:16:38 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ typedef struct s_nm_flags {
 	t_bool		m;
 	t_bool		j;
 	t_bool		print_arch;
+	t_handler_func	*funcs;
 }				t_nm_flags;
 
 t_nm_flags		*get_nm_flags();
@@ -67,8 +68,7 @@ int		intern_nm_parse_option(int ac, const char **av);
 
 char	if_upper(char c, uint8_t ntype);
 char	get_char_type(t_sym sym);
-void	print_value(t_sym sym);
-t_arch	*create_new_arch(t_list **lst_archs);
+void	print_value(t_sym sym, char c);
 
 void	print_error(const char *path, t_type_err type);
 int		return_error(const char *path, t_type_err type, int ret);

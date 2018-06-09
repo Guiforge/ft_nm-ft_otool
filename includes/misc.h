@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/23 22:52:36 by gpouyat           #+#    #+#             */
-/*   Updated: 2018/06/07 14:58:19 by gpouyat          ###   ########.fr       */
+/*   Updated: 2018/06/07 22:48:16 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,9 @@
 		#endif
 	#endif
 #endif
+
+
+#define MALLOC_LVL_FILE_MACH_O 1
 
 typedef enum	s_endian {
 	BIG,
