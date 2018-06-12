@@ -45,6 +45,12 @@
         "atomic": "c",
         "bitset": "c",
         "deque": "c",
-        "system_error": "c"
+        "system_error": "c",
+        "__mutex_base": "c",
+        "fstream": "c",
+        "istream": "c",
+        "ostream": "c",
+        "sstream": "c",
+        "streambuf": "c"
     }
 }

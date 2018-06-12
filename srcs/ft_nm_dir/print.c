@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 17:45:09 by gpouyat           #+#    #+#             */
-/*   Updated: 2018/06/08 09:48:46 by gpouyat          ###   ########.fr       */
+/*   Updated: 2018/06/10 17:09:39 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,9 @@ void	print_m(t_sym sym)
 	char	c;
 
 	c = ft_toupper(get_char_type(sym));
-	if (c ==  '?' && sym.value)
+	if ((sym.ntype & N_TYPE) == N_UNDF && sym.value)
 		ft_putstr(" (common)");
-	else if (c == 'U' || c == '?')
+	else if (c == 'U')
 		ft_putstr(" (undefined)");
 	else if (c == 'C')
 		ft_putstr(" (common)");
@@ -85,10 +85,18 @@ void	print_m(t_sym sym)
 		ft_putstr(" (absolute)");
 	else if (c == 'I')
 		ft_putstr(" (indirect)");
+	else if ((sym.ntype & N_TYPE) == N_SECT)
+	{	if (sym.sectname[0] && sym.segname[0])
+			ft_printf(" (%s,%s)", sym.segname, sym.sectname);
+		else
+			ft_putstr(" (?,?)");
+	}
 	else
-		ft_printf(" (%s,%s)", sym.segname, sym.sectname);
+		ft_putstr(" (?)");	
 	if (sym.ntype & N_EXT)
 		ft_putstr(" external ");
+	else if (sym.ntype & N_PEXT)
+		ft_putstr(" private external ");
 	else
 		ft_putstr(" non-external ");
 }

@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 12:16:54 by gpouyat           #+#    #+#             */
-/*   Updated: 2018/06/09 18:43:10 by gpouyat          ###   ########.fr       */
+/*   Updated: 2018/06/12 10:05:09 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ static t_list		*create_sym_64(t_arch input, char *string_table, struct nlist_64 
 	}
 	elem_sym->name = secure_string(input, string_table, sym_table.n_un.n_strx);
 	elem_sym->value = sym_table.n_value;
+	elem_sym->ntype = sym_table.n_type;
 	elem_sym->arch = ARCH_64;
 	if (find_seg_sect_name_64(sym_table, elem_sym, input))
 	{
@@ -95,7 +96,7 @@ int handler_64(t_arch *input)
 	if (!(sym = get_symtab_cmd(*input)))
 		return (1);
 	input->list = get_list_syms_64(*sym, *input);
-	if (!input->list)
+	if (!(input->list))
 		return (1);
 	sort_sym(&(input->list));
 	print_nm(input);

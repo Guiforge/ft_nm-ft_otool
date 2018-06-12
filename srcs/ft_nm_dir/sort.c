@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/07 17:52:55 by gpouyat           #+#    #+#             */
-/*   Updated: 2018/06/09 21:46:23 by gpouyat          ###   ########.fr       */
+/*   Updated: 2018/06/12 08:47:59 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,19 @@
 
 static t_bool cmp_alpha(t_list *lst_a, t_list *lst_b)
 {
-	t_sym		*a;
+	t_sym			*a;
 	t_sym			*b;
 	int	ret;
 	
 	a = (t_sym *)(lst_a->content);
 	b = (t_sym *)(lst_b->content);
 	ret = ft_strcmp(a->name, b->name);
-	if (!ret || ret == -1)
-		return(a->value < b->value);
+	if (!ret || !(a->name) || !(b->name))
+	 	return(a->value < b->value);
+	if (ret < 0)
+		ret = True;
+	else
+		ret = False;
 	return((t_bool)ret);
 }
 
@@ -36,7 +40,13 @@ static t_bool cmp_num(t_list *lst_a, t_list *lst_b)
 	b = (t_sym *)(lst_b->content);
 	ret = a->value < b->value;
 	if (!ret)
-		return((t_bool)ft_strcmp(a->name, b->name));
+	{
+		ret = ft_strcmp(a->name, b->name);
+		if (ret < 0)
+			ret = True;
+		else
+			ret = False;
+	}
 	return((t_bool)ret);
 }
 

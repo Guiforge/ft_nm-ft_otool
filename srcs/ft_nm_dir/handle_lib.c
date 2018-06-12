@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/03 10:41:28 by gpouyat           #+#    #+#             */
-/*   Updated: 2018/06/09 18:14:30 by gpouyat          ###   ########.fr       */
+/*   Updated: 2018/06/12 09:38:45 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,13 @@ static void new_tmp(t_arch *tmp, size_t length, void *offset, t_arch *input)
 
 static int handle_lib_objects(t_arch *input, void *offset)
 {
-	t_arch	*tmp;
-	t_handler_func *handler_funcs;
+	t_arch			*tmp;
+	t_handler_func	*handler_funcs;
+	int				ret;
 
 	handler_funcs = get_nm_flags()->funcs;
 	tmp = NULL;
+	ret = 0;
 	while (offset || !secure_add(*input, offset, sizeof(struct ar_hdr)))
 	{
 		if (!(tmp = (t_arch *)ft_secu_malloc_lvl(sizeof(t_arch), MALLOC_LVL_FILE_MACH_O)))
@@ -53,17 +55,17 @@ static int handle_lib_objects(t_arch *input, void *offset)
 		if (!tmp->data || !(secure_add(*input, tmp->data, tmp->length - ft_atoi(offset + 3))) || !secure_string(*input, offset + sizeof(struct ar_hdr), 0))
 		 	return (return_error(input->path, ERR_MALFORMED, 1));
 		ft_printf("\n%s(%s):\n", input->path, offset + sizeof(struct ar_hdr));
-		if (exec_handler(handler_funcs, tmp) == 2)
+		if ((ret = exec_handler(handler_funcs, tmp)) == 2)
 			return (return_error(input->path, ERR_INVALID, 1));
 		if (offset + tmp->length + sizeof(struct ar_hdr)  ==  (input->data + input->length))
 			break;
 		if (!(offset = secure_add_mv(*input, offset, tmp->length + sizeof(struct ar_hdr))))
 			return (return_error(input->path, ERR_INVALID, 1));
 	}
-	return(0);
+	return(ret);
 }
 
-static int handle_lib_32(t_arch *input)
+static int parse_lib(t_arch *input)
 {
 	void		*offset;
 
@@ -90,6 +92,6 @@ int handle_lib(t_arch *input)
 		!ft_strncmp(SYMDEF_SORTED, copy_add, AR_LONG_NAME) ||
 		!ft_strncmp(SYMDEF_64, copy_add, AR_LONG_NAME) ||
 		!ft_strncmp(SYMDEF_64_SORTED, copy_add, AR_LONG_NAME))
-		return (handle_lib_32(input));
+		return (parse_lib(input));
 	return (return_error(input->path, ERR_INVALID, 1));
 }

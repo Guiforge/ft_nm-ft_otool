@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 12:16:54 by gpouyat           #+#    #+#             */
-/*   Updated: 2018/06/09 18:23:35 by gpouyat          ###   ########.fr       */
+/*   Updated: 2018/06/12 10:04:58 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ static t_list		*create_sym(t_arch input, char *string_table, struct nlist sym_ta
 	elem_sym->name = secure_string(input, string_table, sym_table.n_un.n_strx);
 	elem_sym->value = sym_table.n_value;
 	elem_sym->arch = ARCH_32;
+	elem_sym->ntype = sym_table.n_type;
 	if (find_seg_sect_name(sym_table, elem_sym, input))
 	{
 		free(elem_sym);
@@ -64,7 +65,7 @@ static int	loop_get_list_sym(t_arch *input, struct symtab_command sym, struct nl
 static t_list	*get_list_syms(struct symtab_command sym, t_arch input)
 {
 	char			*string;
-	struct nlist *array;
+	struct nlist	*array;
 
 	if (input.is_swap)
 		swap_symtab_command(&sym);
