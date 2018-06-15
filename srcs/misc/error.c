@@ -6,21 +6,20 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/01 09:53:13 by gpouyat           #+#    #+#             */
-/*   Updated: 2018/06/12 09:33:22 by gpouyat          ###   ########.fr       */
+/*   Updated: 2018/06/15 21:12:01 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include "ft_nm.h"
-
-void	print_error(const char *path, t_type_err type)
+#include "misc.h"
+void	print_error(const char *path, char *pgm, t_type_err type)
 {
 		// char *seg = NULL;
 		// *seg = 't';
 	if (type == ERR_INVALID)
-		ft_dprintf(STDERR_FILENO, ERR_INVALID_FMT, PROGNAME, path);
+		ft_dprintf(STDERR_FILENO, ERR_INVALID_FMT, pgm, path);
 	else if (type == ERR_MALFORMED)
-		ft_dprintf(STDERR_FILENO, ERR_MALFORMED_FMT, PROGNAME, path);
+		ft_dprintf(STDERR_FILENO, ERR_MALFORMED_FMT, pgm, path);
 	else
 	{
 		// char *seg = NULL;
@@ -29,8 +28,8 @@ void	print_error(const char *path, t_type_err type)
 	}
 }
 
-int		return_error(const char *path, t_type_err type, int ret)
+int		return_error(const char *path, char *pgm, t_type_err type, int ret)
 {
-	print_error(path, type);
+	print_error(path, pgm, type);
 	return (ret);
 }

@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/15 11:27:46 by gpouyat           #+#    #+#             */
-/*   Updated: 2018/05/24 16:24:04 by gpouyat          ###   ########.fr       */
+/*   Updated: 2018/06/15 21:13:44 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,6 @@ struct symtab_command	*get_symtab_cmd(t_arch input)
 		if (!(lc = secure_add_mv(input, lc, ifswap32(&input, lc->cmdsize))))
 			break;
 	}
-	print_error(input.path, ERR_MALFORMED);
+	print_error(input.path,PROGRAM, ERR_MALFORMED);
 			return (NULL);
 }

@@ -6,7 +6,7 @@
 #    By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/04/23 09:03:46 by gpouyat           #+#    #+#              #
-#    Updated: 2018/06/10 17:24:07 by gpouyat          ###   ########.fr        #
+#    Updated: 2018/06/15 21:07:46 by gpouyat          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,11 +45,11 @@ OBJ_PATH_NM = ./obj/nm
 OBJ_PATH_OTOOL = ./obj/otool
 OBJ_PATH_MISC = ./obj/misc
 
-SRC_NAME_NM = main.c error.c handle_64.c handle_32.c find_seg_sect_name.c get_symtab_cmd.c handle_fat.c print.c print_nm.c flags.c handle_lib.c sort.c
+SRC_NAME_NM = main.c handle_64.c handle_32.c find_seg_sect_name.c get_symtab_cmd.c handle_fat.c print.c print_nm.c flags.c handle_lib.c sort.c
 
-SRC_NAME_OTOOL = main.c
+SRC_NAME_OTOOL = main.c flags.c
 
-SRC_NAME_MISC = map_file.c secure_add.c exec_handler.c get_header.c swap_bit.c ifswap.c swap_mach_header.c swap_symtab_command.c swap_section.c swap_nlist.c get_cpu_type.c 
+SRC_NAME_MISC = map_file.c secure_add.c exec_handler.c get_header.c swap_bit.c ifswap.c swap_mach_header.c swap_symtab_command.c swap_section.c swap_nlist.c get_cpu_type.c error.c
 
 OBJ_NAME_NM = $(SRC_NAME_NM:.c=.o)
 OBJ_NAME_OTOOL = $(SRC_NAME_OTOOL:.c=.o)

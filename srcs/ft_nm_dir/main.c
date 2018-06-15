@@ -6,15 +6,13 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/24 09:02:33 by gpouyat           #+#    #+#             */
-/*   Updated: 2018/06/12 09:06:14 by gpouyat          ###   ########.fr       */
+/*   Updated: 2018/06/15 21:15:14 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "ft_nm.h"
 #include <sys/mman.h>
-# include <ar.h>
-#include <mach-o/ranlib.h>
 
 extern int g_optind;
 
@@ -32,7 +30,7 @@ static int one_file(const char *path, int print)
 	t_handler_func *handler_funcs;
 
 	handler_funcs = get_nm_flags()->funcs;
-	if (map_file(PROGNAME, path, &arch) != 0)
+	if (map_file(PROGRAM, path, &arch) != 0)
 		return (1);
 	if (print && which_header(&arch) != M_FAT && which_header(&arch) != M_LIB)
 		ft_printf("\n%s:\n", path);
@@ -41,7 +39,7 @@ static int one_file(const char *path, int print)
 	get_nm_flags()->print_arch = False;
 	ret = exec_handler(handler_funcs, &arch);
 	if (ret == 2)
-		print_error(arch.path, ERR_INVALID);
+		print_error(arch.path, PROGRAM, ERR_INVALID);
 	munmap((void *)arch.data, arch.length);
 	ft_secu_free_lvl(MALLOC_LVL_FILE_MACH_O);
 	return (ret);

@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/23 22:52:36 by gpouyat           #+#    #+#             */
-/*   Updated: 2018/06/09 18:16:38 by gpouyat          ###   ########.fr       */
+/*   Updated: 2018/06/15 21:10:12 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,20 +18,13 @@
 #include "libft.h"
 
 
-# define PROGNAME "ft_nm"
-# define ERR_INVALID_FMT "{red}%s{no}: %s The file was not recognized as a valid object file\n"
-# define ERR_MALFORMED_FMT "{red}%s{no}: %s truncated or malformed object\n"
+# define PROGRAM "ft_nm"
+
 
 # define AR_LONG_NAME sizeof(char[20])
 # define SIZEOF_OBJ_H  sizeof(struct ar_hdr) + AR_LONG_NAME
 # define AR_LEN_BEFORE_SYMTAB SARMAG + SIZEOF_OBJ_H
 
-
-typedef enum	s_type_err {
-	ERR_INVALID,
-	ERR_MALFORMED,
-	ERR_UNDIFINED,
-}				t_type_err;
 
 typedef enum	s_type_arch {
 	ARCH_32,
@@ -70,8 +63,6 @@ char	if_upper(char c, uint8_t ntype);
 char	get_char_type(t_sym sym);
 void	print_value(t_sym sym, char c);
 
-void	print_error(const char *path, t_type_err type);
-int		return_error(const char *path, t_type_err type, int ret);
 int		handler_64(t_arch *input);
 int		handler_32(t_arch *input);
 int		handle_fat(t_arch *input);

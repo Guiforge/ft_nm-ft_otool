@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/05 17:45:26 by gpouyat           #+#    #+#             */
-/*   Updated: 2018/06/09 18:42:52 by gpouyat          ###   ########.fr       */
+/*   Updated: 2018/06/15 21:12:59 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ static int		copy_sect_seg_name_64(t_arch input, t_sym *elem_sym, struct segment_
 	struct section_64			*sect;
 	
 	if (!(sect = secure_add_mv(input, segment, sizeof(struct segment_command_64))))
-		return (return_error(input.path, ERR_UNDIFINED, 1));
+		return (return_error(input.path,PROGRAM, ERR_UNDIFINED, 1));
 	if (!(sect = secure_add_mv(input, sect, index * sizeof(struct section_64))))
-		return (return_error(input.path, ERR_UNDIFINED, 1));
+		return (return_error(input.path,PROGRAM, ERR_UNDIFINED, 1));
 	if (secure_add(input, sect->segname, 16))
 		ft_memcpy(elem_sym->segname, sect->segname, 16);
 	if (ifswap32(&input,segment->nsects) > 0 && secure_add(input, sect->sectname, 16))
@@ -53,7 +53,7 @@ int		find_seg_sect_name_64(struct nlist_64 symbol, t_sym *elem_sym, t_arch input
 			tot += ifswap32(&input, ((struct segment_command_64 *)lc)->nsects);
 		}
 		if (!(lc = secure_add_mv(input, lc, ifswap32(&input, lc->cmdsize))))
-			return(return_error(input.path, ERR_MALFORMED, 1));
+			return(return_error(input.path,PROGRAM, ERR_MALFORMED, 1));
 	}
 	return (0);
 }
@@ -63,9 +63,9 @@ static int		copy_sect_seg_name(t_arch input, t_sym *elem_sym, struct segment_com
 	struct section			*sect;
 	
 	if (!(sect = secure_add_mv(input, segment, sizeof(struct segment_command))))
-		return (return_error(input.path, ERR_UNDIFINED, 1));
+		return (return_error(input.path,PROGRAM, ERR_UNDIFINED, 1));
 	if (!(sect = secure_add_mv(input, sect, index * sizeof(struct section))))
-		return (return_error(input.path, ERR_UNDIFINED, 1));
+		return (return_error(input.path,PROGRAM, ERR_UNDIFINED, 1));
 	if (secure_add(input, sect->segname, 16))
 		ft_memcpy(elem_sym->segname, sect->segname, 16);
 	if (segment->nsects > 0 && secure_add(input, sect->sectname, 16))
@@ -98,7 +98,7 @@ int		find_seg_sect_name(struct nlist symbol, t_sym *elem_sym, t_arch input)
 			tot += ifswap32(&input, ((struct segment_command *)lc)->nsects);
 		}
 		if (!(lc = secure_add_mv(input, lc, ifswap32(&input, lc->cmdsize))))
-			return_error(input.path, ERR_MALFORMED, 1);
+			return_error(input.path,PROGRAM, ERR_MALFORMED, 1);
 	}
 	return (0);
 }

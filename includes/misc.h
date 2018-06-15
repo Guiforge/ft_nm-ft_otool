@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/23 22:52:36 by gpouyat           #+#    #+#             */
-/*   Updated: 2018/06/07 22:48:16 by gpouyat          ###   ########.fr       */
+/*   Updated: 2018/06/15 21:15:30 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,17 @@
 	#endif
 #endif
 
+typedef enum	s_type_err {
+	ERR_INVALID,
+	ERR_MALFORMED,
+	ERR_UNDIFINED,
+}				t_type_err;
+
+# define ERR_INVALID_FMT "{red}%s{no}: %s The file was not recognized as a valid object file\n"
+# define ERR_MALFORMED_FMT "{red}%s{no}: %s truncated or malformed object\n"
+
+void	print_error(const char *path, char *pgm, t_type_err type);
+int		return_error(const char *path, char *pgm, t_type_err type, int ret);
 
 #define MALLOC_LVL_FILE_MACH_O 1
 

@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 09:41:59 by gpouyat           #+#    #+#             */
-/*   Updated: 2018/06/09 18:14:55 by gpouyat          ###   ########.fr       */
+/*   Updated: 2018/06/15 21:16:00 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,14 @@ static int handle_new(t_arch *input, struct fat_arch *arch)
 
 	handler_funcs = get_nm_flags()->funcs;
 	if (!(tmp = (t_arch *)ft_secu_malloc_lvl(sizeof(t_arch), MALLOC_LVL_FILE_MACH_O)))
-		return (return_error(input->path, ERR_UNDIFINED, 1));
+		return (return_error(input->path, PROGRAM, ERR_UNDIFINED, 1));
 	tmp->data = secure_add_mv(*input, input->data, ifswap32(input, arch->offset));
 	tmp->length = ifswap32(input, arch->size);
 	tmp->path = input->path;
 	if (!tmp->data || !(secure_add(*input, tmp->data, tmp->length)))
-		return (return_error(input->path, ERR_MALFORMED, 1));
+		return (return_error(input->path, PROGRAM, ERR_MALFORMED, 1));
 	if (exec_handler(handler_funcs, tmp) == 2)
-		return (return_error(tmp->path, ERR_INVALID, 1));
+		return (return_error(tmp->path, PROGRAM, ERR_INVALID, 1));
 	return (0);
 }
 
@@ -44,7 +44,7 @@ static int	handle_fat_archs(t_arch *input, struct fat_header header, struct fat_
 		if (!ft_strcmp(name, GET_ARCH))
 			return(handle_new(input, arch));
 		if (!(arch = secure_add_mv(*input, arch, sizeof(struct fat_arch))))
-			return (return_error(input->path, ERR_INVALID, 1));
+			return (return_error(input->path, PROGRAM, ERR_INVALID, 1));
 	}
 	index = header.nfat_arch;
 	arch = tmp;
@@ -53,7 +53,7 @@ static int	handle_fat_archs(t_arch *input, struct fat_header header, struct fat_
 		if (handle_new(input, arch))
 			return(1);
 		if (!(arch = secure_add_mv(*input, arch, sizeof(struct fat_arch))))
-			return (return_error(input->path, ERR_INVALID, 1));
+			return (return_error(input->path, PROGRAM, ERR_INVALID, 1));
 	}
 	return (0);
 }
@@ -66,9 +66,9 @@ int handle_fat(t_arch *input)
 
 	get_nm_flags()->print_arch = True;
 	if (get_header_fat(*input, input->data, &header))
-		return(return_error(input->path, ERR_INVALID, 2));
+		return(return_error(input->path, PROGRAM, ERR_INVALID, 2));
 	if (!(arch = secure_add_mv(*input, input->data, sizeof(struct fat_header))))
-		return (return_error(input->path, ERR_INVALID, 2));
+		return (return_error(input->path, PROGRAM, ERR_INVALID, 2));
 	ret = handle_fat_archs(input, header, arch);
 	return (ret);
 }

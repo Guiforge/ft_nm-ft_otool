@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/03 10:41:28 by gpouyat           #+#    #+#             */
-/*   Updated: 2018/06/12 09:38:45 by gpouyat          ###   ########.fr       */
+/*   Updated: 2018/06/15 21:14:19 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,19 +48,19 @@ static int handle_lib_objects(t_arch *input, void *offset)
 	while (offset || !secure_add(*input, offset, sizeof(struct ar_hdr)))
 	{
 		if (!(tmp = (t_arch *)ft_secu_malloc_lvl(sizeof(t_arch), MALLOC_LVL_FILE_MACH_O)))
-			return (return_error(input->path, ERR_UNDIFINED, 1));
+			return (return_error(input->path, PROGRAM, ERR_UNDIFINED, 1));
 		if (!secure_string(*input, offset, 0))
-			return (return_error(input->path, ERR_MALFORMED, 1));
+			return (return_error(input->path, PROGRAM, ERR_MALFORMED, 1));
 		new_tmp(tmp, ft_atoi(((struct ar_hdr *)offset)->ar_size), offset, input);
 		if (!tmp->data || !(secure_add(*input, tmp->data, tmp->length - ft_atoi(offset + 3))) || !secure_string(*input, offset + sizeof(struct ar_hdr), 0))
-		 	return (return_error(input->path, ERR_MALFORMED, 1));
+		 	return (return_error(input->path, PROGRAM, ERR_MALFORMED, 1));
 		ft_printf("\n%s(%s):\n", input->path, offset + sizeof(struct ar_hdr));
 		if ((ret = exec_handler(handler_funcs, tmp)) == 2)
-			return (return_error(input->path, ERR_INVALID, 1));
+			return (return_error(input->path, PROGRAM, ERR_INVALID, 1));
 		if (offset + tmp->length + sizeof(struct ar_hdr)  ==  (input->data + input->length))
 			break;
 		if (!(offset = secure_add_mv(*input, offset, tmp->length + sizeof(struct ar_hdr))))
-			return (return_error(input->path, ERR_INVALID, 1));
+			return (return_error(input->path, PROGRAM, ERR_INVALID, 1));
 	}
 	return(ret);
 }
@@ -70,13 +70,13 @@ static int parse_lib(t_arch *input)
 	void		*offset;
 
 	if (!(offset = secure_add_mv(*input, input->data, AR_LEN_BEFORE_SYMTAB)))
-		return (return_error(input->path, ERR_MALFORMED, 1));	
+		return (return_error(input->path, PROGRAM, ERR_MALFORMED, 1));	
 	if (!secure_add(*input, offset, sizeof(uint32_t) + 1))
-		return (return_error(input->path, ERR_MALFORMED, 1));	
+		return (return_error(input->path, PROGRAM, ERR_MALFORMED, 1));	
 	if (!(offset = secure_add_mv(*input, offset, *(uint32_t *)offset + sizeof(uint32_t))))
-		return (return_error(input->path, ERR_MALFORMED, 1));	
+		return (return_error(input->path, PROGRAM, ERR_MALFORMED, 1));	
 	if (!(offset = go_end_string_table(input, offset)))
-		return (return_error(input->path, ERR_INVALID, 1));	
+		return (return_error(input->path, PROGRAM, ERR_INVALID, 1));	
 	return (handle_lib_objects(input, offset));
 }
 
@@ -85,13 +85,13 @@ int handle_lib(t_arch *input)
 	void			*copy_add;
 	
 	if (!(copy_add = secure_add_mv(*input, input->data, SARMAG + sizeof(struct ar_hdr))))
-		return (return_error(input->path, ERR_MALFORMED, 1));
+		return (return_error(input->path, PROGRAM, ERR_MALFORMED, 1));
 	if (!secure_add(*input, copy_add, AR_LONG_NAME))
-		return (return_error(input->path, ERR_MALFORMED, 1));
+		return (return_error(input->path, PROGRAM, ERR_MALFORMED, 1));
 	if (!ft_strncmp(SYMDEF, copy_add, AR_LONG_NAME) ||
 		!ft_strncmp(SYMDEF_SORTED, copy_add, AR_LONG_NAME) ||
 		!ft_strncmp(SYMDEF_64, copy_add, AR_LONG_NAME) ||
 		!ft_strncmp(SYMDEF_64_SORTED, copy_add, AR_LONG_NAME))
 		return (parse_lib(input));
-	return (return_error(input->path, ERR_INVALID, 1));
+	return (return_error(input->path, PROGRAM, ERR_INVALID, 1));
 }

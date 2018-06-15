@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 12:16:54 by gpouyat           #+#    #+#             */
-/*   Updated: 2018/06/12 10:04:58 by gpouyat          ###   ########.fr       */
+/*   Updated: 2018/06/15 21:14:19 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,12 +71,12 @@ static t_list	*get_list_syms(struct symtab_command sym, t_arch input)
 		swap_symtab_command(&sym);
 	if (!(array = secure_add_mv(input, input.data, sym.symoff)))
 	{
-		print_error(input.path, ERR_MALFORMED);
+		print_error(input.path,PROGRAM, ERR_MALFORMED);
 		return (NULL);
 	}
 	if (!(string = secure_add_mv(input, input.data, sym.stroff)))
 	{
-		print_error(input.path, ERR_MALFORMED);
+		print_error(input.path,PROGRAM, ERR_MALFORMED);
 		return (NULL);
 	}
 	if (!loop_get_list_sym(&input, sym, array, string))
@@ -90,12 +90,12 @@ int handler_32(t_arch *input)
 	struct	symtab_command	*sym;
 
 	if (get_header_32(*input, input->data, &header))
-		return(return_error(input->path, ERR_INVALID, 2));
+		return(return_error(input->path, PROGRAM, ERR_INVALID, 2));
 	input->ncmds = header.ncmds;
 	input->cpu_type = header.cputype;
 	input->cpu_subtype = header.cpusubtype;
 	if (!(input->lc = secure_add_mv(*input, input->data, sizeof(struct mach_header))))
-		return(return_error(input->path, ERR_INVALID, 2));
+		return(return_error(input->path, PROGRAM, ERR_INVALID, 2));
 	if (!(sym = get_symtab_cmd(*input)))
 		return (1);
 	input->list = get_list_syms(*sym, *input);
