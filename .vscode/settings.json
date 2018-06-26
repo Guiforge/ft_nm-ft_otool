@@ -52,6 +52,7 @@
         "ostream": "c",
         "sstream": "c",
         "streambuf": "c",
-        "ft_otool.h": "c"
+        "ft_otool.h": "c",
+        "locale": "c"
     }
 }

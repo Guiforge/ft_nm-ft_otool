@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/23 22:52:36 by gpouyat           #+#    #+#             */
-/*   Updated: 2018/06/15 21:15:30 by gpouyat          ###   ########.fr       */
+/*   Updated: 2018/06/25 17:40:45 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,14 @@ typedef enum	s_endian {
 	LITTLE,
 	UNKNOWN
 }				t_endian;
+
+#ifdef __BIG_ENDIAN__
+	#define GET_ENDIAN (t_endian)(BIG)
+#endif
+
+#ifdef __LITTLE_ENDIAN__
+	#define GET_ENDIAN (t_endian)(LITTLE)
+#endif
 
 typedef enum s_type_macho {
 	M_32,

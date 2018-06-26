@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/15 19:23:18 by gpouyat           #+#    #+#             */
-/*   Updated: 2018/06/15 19:30:33 by gpouyat          ###   ########.fr       */
+/*   Updated: 2018/06/26 11:22:39 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 const t_handler_func handler_funcs[] = {
 	{M_32, &handler_32},
-	// {M_64, &handler_64},
+	{M_64, &handler_64},
 	// {M_FAT, &handle_fat},
 	// {M_LIB, &handle_lib},
 	{M_END, NULL},

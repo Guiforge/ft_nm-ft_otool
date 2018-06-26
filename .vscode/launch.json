@@ -23,7 +23,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/ft_otool",
-            "args": ["toto"],
+            "args": ["binaries/64/64_exe_easy"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],

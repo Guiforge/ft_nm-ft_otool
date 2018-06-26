@@ -6,7 +6,7 @@
 #    By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/04/23 09:03:46 by gpouyat           #+#    #+#              #
-#    Updated: 2018/06/15 21:07:46 by gpouyat          ###   ########.fr        #
+#    Updated: 2018/06/26 11:20:27 by gpouyat          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,7 +47,7 @@ OBJ_PATH_MISC = ./obj/misc
 
 SRC_NAME_NM = main.c handle_64.c handle_32.c find_seg_sect_name.c get_symtab_cmd.c handle_fat.c print.c print_nm.c flags.c handle_lib.c sort.c
 
-SRC_NAME_OTOOL = main.c flags.c
+SRC_NAME_OTOOL = main.c flags.c go_text_32.c print_otool.c handle_32.c handle_64.c go_text_64.c
 
 SRC_NAME_MISC = map_file.c secure_add.c exec_handler.c get_header.c swap_bit.c ifswap.c swap_mach_header.c swap_symtab_command.c swap_section.c swap_nlist.c get_cpu_type.c error.c
 
