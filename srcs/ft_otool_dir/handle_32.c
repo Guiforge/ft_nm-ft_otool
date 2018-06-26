@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/23 09:33:20 by gpouyat           #+#    #+#             */
-/*   Updated: 2018/06/26 11:35:27 by gpouyat          ###   ########.fr       */
+/*   Updated: 2018/06/26 12:49:15 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,10 @@ int handler_32(t_arch *input)
 	if (!(start = go_text_32(input, &sect)))
 		return(1);
 	if (secure_add(*input, start, sect.size))
+	{
+		print_cpu_type(input);
 		print_32(input, start, sect);
+	}
 	else
 		return(return_error(input->path, PROGRAM, ERR_MALFORMED, 1));
 	return(0);

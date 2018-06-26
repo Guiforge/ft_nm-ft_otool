@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/18 16:29:49 by gpouyat           #+#    #+#             */
-/*   Updated: 2018/06/25 17:56:17 by gpouyat          ###   ########.fr       */
+/*   Updated: 2018/06/26 12:49:04 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,4 +82,25 @@ void print_hex(char *start, uint16_t nb, t_bool space, t_bool swap)
 		start++;
 		i++;
 	}
+}
+
+t_bool	print_cpu_type(t_arch *input)
+{
+	const char	*name;
+
+	if (!get_otool_flags()->print_arch)
+		return (True);
+	name = getArchInfoFromCpuType(input->cpu_type, input->cpu_subtype).name;
+	if (name && !ft_strcmp(name, GET_ARCH))
+	{
+		ft_printf("%s:\n", input->path);
+		return (False);
+	}
+	if (!name)
+	{
+		ft_printf("%s:\n", input->path);
+		return (False);
+	}
+	ft_printf("%s (architecture %s):\n", input->path, name);
+	return (False);
 }

@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/24 09:02:33 by gpouyat           #+#    #+#             */
-/*   Updated: 2018/06/24 20:28:21 by gpouyat          ###   ########.fr       */
+/*   Updated: 2018/06/26 12:47:10 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,9 @@ static int one_file(const char *path)
 	handler_funcs = get_otool_flags()->funcs;
 	if (map_file(PROGRAM, path, &arch) != 0)
 		return (1);
-	//if (print && which_header(&arch) != M_FAT && which_header(&arch) != M_LIB)
-		ft_printf("%s:\n", path);
-	t_list	*list;
-	list = NULL;
 	get_otool_flags()->print_arch = False;
+	if (which_header(&arch) != M_FAT && which_header(&arch) != M_LIB)
+		ft_printf("%s:\n", path);
 	ret = exec_handler(handler_funcs, &arch);
 	if (ret == 2)
 		print_error(arch.path, PROGRAM, ERR_INVALID);
