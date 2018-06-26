@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/15 19:18:16 by gpouyat           #+#    #+#             */
-/*   Updated: 2018/06/26 12:23:07 by gpouyat          ###   ########.fr       */
+/*   Updated: 2018/06/26 14:06:34 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int				handler_32(t_arch *input);
 int				handler_64(t_arch *input);
 void			print_hex(char *start, uint16_t nb, t_bool space, t_bool swap);
 int				handle_fat(t_arch *input);
+int				handle_lib(t_arch *input);
 t_bool			print_cpu_type(t_arch *input);
 
 #endif

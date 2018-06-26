@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/23 22:52:36 by gpouyat           #+#    #+#             */
-/*   Updated: 2018/06/15 21:10:12 by gpouyat          ###   ########.fr       */
+/*   Updated: 2018/06/26 14:07:08 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,6 @@
 
 # define PROGRAM "ft_nm"
 
-
-# define AR_LONG_NAME sizeof(char[20])
-# define SIZEOF_OBJ_H  sizeof(struct ar_hdr) + AR_LONG_NAME
-# define AR_LEN_BEFORE_SYMTAB SARMAG + SIZEOF_OBJ_H
 
 
 typedef enum	s_type_arch {

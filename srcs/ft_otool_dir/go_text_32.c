@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/15 21:20:48 by gpouyat           #+#    #+#             */
-/*   Updated: 2018/06/26 11:13:26 by gpouyat          ###   ########.fr       */
+/*   Updated: 2018/06/26 22:26:20 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,10 @@ static void	*go_lc_text_32(t_arch input)
 {
 	uint32_t				index;
 	struct	load_command	*lc;
+	char					cmp[16];
 
 	lc = input.lc;
+	ft_memset(cmp, 0, 16);
 	index = -1;
 	while (++index < input.ncmds)
 	{
@@ -28,7 +30,7 @@ static void	*go_lc_text_32(t_arch input)
 				print_error(input.path,PROGRAM, ERR_MALFORMED);
 				return (NULL);
 			}
-			if (!ft_strncmp(((struct segment_command *)lc)->segname, SEG_TEXT, 16))
+			if (!ft_strncmp(((struct segment_command *)lc)->segname, SEG_TEXT, 16) || !ft_memcmp(((struct segment_command_64 *)lc)->segname, cmp, 16))
 				return (lc);
 		}
 		if (!(lc = secure_add_mv(input, lc, ifswap32(&input, lc->cmdsize))))

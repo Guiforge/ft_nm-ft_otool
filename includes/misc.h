@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/23 22:52:36 by gpouyat           #+#    #+#             */
-/*   Updated: 2018/06/25 17:40:45 by gpouyat          ###   ########.fr       */
+/*   Updated: 2018/06/26 14:07:19 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,10 @@ typedef enum	s_endian {
 #ifdef __LITTLE_ENDIAN__
 	#define GET_ENDIAN (t_endian)(LITTLE)
 #endif
+
+# define AR_LONG_NAME sizeof(char[20])
+# define SIZEOF_OBJ_H  sizeof(struct ar_hdr) + AR_LONG_NAME
+# define AR_LEN_BEFORE_SYMTAB SARMAG + SIZEOF_OBJ_H
 
 typedef enum s_type_macho {
 	M_32,

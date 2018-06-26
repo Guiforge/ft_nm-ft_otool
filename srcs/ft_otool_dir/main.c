@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/24 09:02:33 by gpouyat           #+#    #+#             */
-/*   Updated: 2018/06/26 12:47:10 by gpouyat          ###   ########.fr       */
+/*   Updated: 2018/06/26 22:24:25 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ static int one_file(const char *path)
 	get_otool_flags()->print_arch = False;
 	if (which_header(&arch) != M_FAT && which_header(&arch) != M_LIB)
 		ft_printf("%s:\n", path);
+	if (which_header(&arch) == M_LIB)
+		ft_printf("Archive : %s\n", path);
 	ret = exec_handler(handler_funcs, &arch);
 	if (ret == 2)
 		print_error(arch.path, PROGRAM, ERR_INVALID);
