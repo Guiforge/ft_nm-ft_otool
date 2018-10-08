@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/01 09:53:13 by gpouyat           #+#    #+#             */
-/*   Updated: 2018/10/08 11:55:57 by gpouyat          ###   ########.fr       */
+/*   Updated: 2018/10/08 15:36:07 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,4 +26,10 @@ int		return_error(const char *path, char *pgm, t_type_err type, int ret)
 {
 	print_error(path, pgm, type);
 	return (ret);
+}
+
+void	*return_error_null(const char *path, char *pgm, t_type_err type)
+{
+	print_error(path, pgm, type);
+	return (NULL);
 }

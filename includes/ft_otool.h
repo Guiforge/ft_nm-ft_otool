@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/15 19:18:16 by gpouyat           #+#    #+#             */
-/*   Updated: 2018/06/26 14:06:34 by gpouyat          ###   ########.fr       */
+/*   Updated: 2018/10/08 13:21:27 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@
 #define PROGRAM "ft_otool"
 
 typedef struct s_otool_flags {
-	t_bool		t;
-    t_bool      h;
 	t_bool		print_arch;
 	t_handler_func	*funcs;
 }				t_otool_flags;

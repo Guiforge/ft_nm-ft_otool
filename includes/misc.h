@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/23 22:52:36 by gpouyat           #+#    #+#             */
-/*   Updated: 2018/10/08 12:35:47 by gpouyat          ###   ########.fr       */
+/*   Updated: 2018/10/08 13:33:47 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ typedef enum	s_type_err {
 
 void	print_error(const char *path, char *pgm, t_type_err type);
 int		return_error(const char *path, char *pgm, t_type_err type, int ret);
+void	*return_error_null(const char *path, char *pgm, t_type_err type);
 
 #define MALLOC_LVL_FILE_MACH_O 1
 

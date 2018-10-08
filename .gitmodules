@@ -1,3 +1,6 @@
 [submodule "libft"]
 	path = libft
 	url = https://github.com/Guiforge/libft.git
+[submodule "unit_test_nm_otool"]
+	path = unit_test_nm_otool
+	url = https://github.com/Guiforge/unit_test_nm_otool

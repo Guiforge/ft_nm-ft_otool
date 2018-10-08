@@ -6,13 +6,13 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/30 11:24:59 by gpouyat           #+#    #+#             */
-/*   Updated: 2018/06/09 20:00:07 by gpouyat          ###   ########.fr       */
+/*   Updated: 2018/10/08 13:18:37 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_nm.h"
+#include "../../includes/ft_nm.h"
 
-const t_handler_func handler_funcs[] = {
+static const t_handler_func	g_handler_funcs[] = {
 	{M_32, &handler_32},
 	{M_64, &handler_64},
 	{M_FAT, &handle_fat},
@@ -20,7 +20,7 @@ const t_handler_func handler_funcs[] = {
 	{M_END, NULL},
 };
 
-static t_nm_flags	flags = {
+static t_nm_flags			g_flags = {
 	False,
 	False,
 	False,
@@ -32,57 +32,57 @@ static t_nm_flags	flags = {
 	False,
 	False,
 	False,
-	(t_handler_func *)handler_funcs
+	(t_handler_func *)g_handler_funcs
 };
 
-t_nm_flags		*get_nm_flags()
+t_nm_flags					*get_nm_flags()
 {
-	return (&flags);
+	return (&g_flags);
 }
 
-void	simple_option(char opt)
+void						simple_option(char opt)
 {
 	if (opt == 'g')
-		flags.g = True;
+		g_flags.g = True;
 	else if (opt == 'A')
-		flags.A = True;
+		g_flags.A = True;
 	else if (opt == 'n')
-		flags.n = True;
+		g_flags.n = True;
 	else if (opt == 'r')
-		flags.r = True;
+		g_flags.r = True;
 	else if (opt == 'm')
-		flags.m = True;
+		g_flags.m = True;
 	else if (opt == 'j')
-		flags.j = True;
+		g_flags.j = True;
 	else if (opt == 'U')
-		flags.U = True;
+		g_flags.U = True;
 }
 
-int		intern_nm_parse_option(int ac, const char **av)
+int							intern_nm_parse_option(int ac, const char **av)
 {
-	int opt;
+	int		opt;
 
 	while((opt = ft_getopt(ac, av, "hagAnpruUmj")) != -1)
 	{
 		simple_option(opt);
 		if (opt == 'a')
 		{
-			flags.a = True;
-			flags.u = False;
-			flags.U = False;
+			g_flags.a = True;
+			g_flags.u = False;
+			g_flags.U = False;
 		}
 		if (opt == 'h')
 			return (1);
 		if (opt == 'u')
 		{
-			flags.u = True;
-			flags.U = False;
-			flags.a = False;
+			g_flags.u = True;
+			g_flags.U = False;
+			g_flags.a = False;
 		}
 		if (opt == 'p')
 		{
-			flags.n = False;
-			flags.p = True;
+			g_flags.n = False;
+			g_flags.p = True;
 		}
 		if (opt == '?')
 			return (1);
