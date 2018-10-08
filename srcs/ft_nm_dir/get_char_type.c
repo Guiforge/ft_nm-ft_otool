@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_tools.c                                      :+:      :+:    :+:   */
+/*   get_char_type.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/08 17:45:22 by gpouyat           #+#    #+#             */
-/*   Updated: 2018/10/08 17:47:24 by gpouyat          ###   ########.fr       */
+/*   Updated: 2018/10/08 18:23:30 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@ static char			if_upper(char c, uint8_t ntype)
 	if (ntype & N_EXT)
 		return (ft_toupper(c));
 	if (c == 'c' || c == 'u')
-		return ('?');	
+		return ('?');
 	return (c);
 }
 
-static char		find_sect_type(t_sym sym)
+static char			find_sect_type(t_sym sym)
 {
 	if (ft_strequ(sym.segname, "__TEXT") && ft_strequ(sym.sectname, "__text"))
 		return (if_upper('t', sym.ntype));
@@ -32,7 +32,7 @@ static char		find_sect_type(t_sym sym)
 	return (if_upper('s', sym.ntype));
 }
 
-char			get_char_type(t_sym sym)
+char				get_char_type(t_sym sym)
 {
 	int		type;
 

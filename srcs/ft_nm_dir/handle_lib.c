@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/03 10:41:28 by gpouyat           #+#    #+#             */
-/*   Updated: 2018/10/08 17:20:15 by gpouyat          ###   ########.fr       */
+/*   Updated: 2018/10/08 18:23:00 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void			*go_end_string_table(t_arch *input, void *start)
 	return (NULL);
 }
 
-static t_arch	*new_tmp(size_t length, void *offset, t_arch *input)
+static t_arch		*new_tmp(size_t length, void *offset, t_arch *input)
 {
 	t_arch	*tmp;
 
@@ -48,7 +48,7 @@ static t_arch	*new_tmp(size_t length, void *offset, t_arch *input)
 					!secure_string(*input, offset + sizeof(struct ar_hdr), 0))
 		return (return_error_null(input->path, PROGRAM, ERR_MALFORMED));
 	ft_printf("\n%s(%s):\n", input->path, offset + sizeof(struct ar_hdr));
-	return(tmp);
+	return (tmp);
 }
 
 static int			handle_lib_objects(t_arch *input, void *offset)
@@ -65,7 +65,7 @@ static int			handle_lib_objects(t_arch *input, void *offset)
 		tmp = new_tmp(ft_atoi(((struct ar_hdr *)offset)->ar_size), offset,
 																		input);
 		if (!tmp)
-			return(1);
+			return (1);
 		if ((ret = exec_handler(handler_funcs, tmp)) == 2)
 			return (return_error(input->path, PROGRAM, ERR_INVALID, 1));
 		if (offset + tmp->length +
@@ -74,9 +74,8 @@ static int			handle_lib_objects(t_arch *input, void *offset)
 		if (!(offset = secure_add_mv(*input, offset,
 										tmp->length + sizeof(struct ar_hdr))))
 			return (return_error(input->path, PROGRAM, ERR_INVALID, 1));
-
 	}
-	return(ret);
+	return (ret);
 }
 
 static int			parse_lib(t_arch *input)

@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/30 11:24:59 by gpouyat           #+#    #+#             */
-/*   Updated: 2018/10/08 16:11:31 by gpouyat          ###   ########.fr       */
+/*   Updated: 2018/10/08 17:59:57 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void						simple_option(char opt)
 	if (opt == 'g')
 		g_flags.g = True;
 	else if (opt == 'A')
-		g_flags.A = True;
+		g_flags.a_up = True;
 	else if (opt == 'n')
 		g_flags.n = True;
 	else if (opt == 'r')
@@ -55,7 +55,7 @@ void						simple_option(char opt)
 	else if (opt == 'j')
 		g_flags.j = True;
 	else if (opt == 'U')
-		g_flags.U = True;
+		g_flags.u_up = True;
 	else if (opt == 'p')
 	{
 		g_flags.n = False;
@@ -64,7 +64,7 @@ void						simple_option(char opt)
 	else if (opt == 'u')
 	{
 		g_flags.u = True;
-		g_flags.U = False;
+		g_flags.u_up = False;
 		g_flags.a = False;
 	}
 }
@@ -80,7 +80,7 @@ int							intern_nm_parse_option(int ac, const char **av)
 		{
 			g_flags.a = True;
 			g_flags.u = False;
-			g_flags.U = False;
+			g_flags.u_up = False;
 		}
 		if (opt == 'h')
 			return (1);

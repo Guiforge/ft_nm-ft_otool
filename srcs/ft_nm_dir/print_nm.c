@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/30 11:19:00 by gpouyat           #+#    #+#             */
-/*   Updated: 2018/10/08 17:31:38 by gpouyat          ###   ########.fr       */
+/*   Updated: 2018/10/08 17:59:57 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static t_bool	is_print_nm(t_sym sym, char c)
 		return (True);
 	if (get_nm_flags()->u && !ft_strchr("uU", c))
 		return (False);
-	if (get_nm_flags()->U && ft_strchr("uU", c))
+	if (get_nm_flags()->u_up && ft_strchr("uU", c))
 		return (False);
 	if (get_nm_flags()->g && sym.ntype & N_EXT)
 		return (False);
@@ -51,7 +51,7 @@ static t_bool	print_cpu_type(t_arch *input)
 
 static void		print_nm_simple(t_arch *input, t_sym sym, char c)
 {
-	if (get_nm_flags()->A)
+	if (get_nm_flags()->a_up)
 		print_path(input);
 	if (!get_nm_flags()->j && !get_nm_flags()->u)
 	{
