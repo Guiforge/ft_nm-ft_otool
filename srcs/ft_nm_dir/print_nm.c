@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/30 11:19:00 by gpouyat           #+#    #+#             */
-/*   Updated: 2018/06/08 09:49:04 by gpouyat          ###   ########.fr       */
+/*   Updated: 2018/10/08 12:09:30 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static t_bool	print_cpu_type(t_arch *input)
 {
 	const char	*name;
 
-	name = getArchInfoFromCpuType(input->cpu_type, input->cpu_subtype).name;
+	name = get_arch_info_from_cpu_type(input->cpu_type, input->cpu_subtype).name;
 	if (name && !ft_strcmp(name, GET_ARCH))
 		return (False);
 	if (!name)
@@ -80,8 +80,8 @@ void	print_nm(t_arch *input)
 				ft_putstr(sym.name);
 			else
 				ft_putstr("bad string index");
-			if (c == 'I')
-				ft_printf(" (indirect for %s)", sym.name);
+			// if (c == 'I')
+			// 	ft_printf(" (indirect for %s)", sym.name);
 			ft_putchar('\n');
 		}
 		lst = lst->next;

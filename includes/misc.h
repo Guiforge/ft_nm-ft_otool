@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/23 22:52:36 by gpouyat           #+#    #+#             */
-/*   Updated: 2018/06/26 14:07:19 by gpouyat          ###   ########.fr       */
+/*   Updated: 2018/10/08 12:35:47 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,10 @@ typedef enum	s_type_err {
 	ERR_UNDIFINED,
 }				t_type_err;
 
+# define ERR_OPEN_FMT "{red}%s{no}: '%s': open() fail\n"
+# define ERR_FSTAT_FMT "{red}%s{no}: fd:'%d' : fstat() fail\n"
+# define ERR_IS_DIR_FMT "{red}%s{no}: fd:'%d': it is a directory \n"
+# define ERR_MMAP_FMT "{red}%s{no}: fd:'%d' : mmap() fail\n"
 # define ERR_INVALID_FMT "{red}%s{no}: %s The file was not recognized as a valid object file\n"
 # define ERR_MALFORMED_FMT "{red}%s{no}: %s truncated or malformed object\n"
 
@@ -101,9 +105,9 @@ typedef struct	s_handler_func
 	int			(*f)(t_arch *);
 }				t_handler_func;
 
-uint16_t ft_swapInt16(uint16_t x);
-uint32_t ft_swapInt32(uint32_t x);
-uint64_t ft_swapInt64(uint64_t x);
+uint16_t ft_swap_int16(uint16_t x);
+uint32_t ft_swap_int32(uint32_t x);
+uint64_t ft_swap_int64(uint64_t x);
 
 uint16_t ifswap16(t_arch *input, uint16_t x);
 uint32_t ifswap32(t_arch *input, uint32_t x);
@@ -138,6 +142,6 @@ typedef struct s_arch_info
     t_endian byte_order;
 } t_arch_info;
 
-t_arch_info getArchInfoFromCpuType(cpu_type_t cputype, cpu_subtype_t cpusubtype);
+t_arch_info get_arch_info_from_cpu_type(cpu_type_t cputype, cpu_subtype_t cpusubtype);
 
 #endif

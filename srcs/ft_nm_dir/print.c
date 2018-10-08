@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 17:45:09 by gpouyat           #+#    #+#             */
-/*   Updated: 2018/06/10 17:09:39 by gpouyat          ###   ########.fr       */
+/*   Updated: 2018/10/02 13:09:23 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,14 +56,14 @@ void print_value(t_sym sym, char c)
 {
 	if (sym.arch == ARCH_64)
 	{
-		if ((!(sym.ntype & N_EXT) || sym.value || (sym.ntype & N_TYPE) == N_SECT || c == 'A') && c != 'I')
+		if ((!(sym.ntype & N_EXT) || sym.value || (sym.ntype & N_TYPE) == N_SECT || c == 'A'))
 			ft_printf("%016llx", sym.value);
 		else
 			ft_putstr("                ");
 	}
 	else
 	{
-		if ((!(sym.ntype & N_EXT) || sym.value || (sym.ntype & N_TYPE) == N_SECT || c == 'A' ) && c != 'I')
+		if ((!(sym.ntype & N_EXT) || sym.value || (sym.ntype & N_TYPE) == N_SECT || c == 'A' ))
 			ft_printf("%08llx", sym.value);
 		else
 			ft_putstr("        ");

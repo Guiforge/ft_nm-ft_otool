@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 09:41:59 by gpouyat           #+#    #+#             */
-/*   Updated: 2018/06/15 21:16:00 by gpouyat          ###   ########.fr       */
+/*   Updated: 2018/10/08 12:09:30 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static int	handle_fat_archs(t_arch *input, struct fat_header header, struct fat_
 	tmp = arch;
 	while (index--)
 	{
-		name = getArchInfoFromCpuType(ifswap32(input, arch->cputype), ifswap32(input, arch->cpusubtype)).name;
+		name = get_arch_info_from_cpu_type(ifswap32(input, arch->cputype), ifswap32(input, arch->cpusubtype)).name;
 		if (!ft_strcmp(name, GET_ARCH))
 			return(handle_new(input, arch));
 		if (!(arch = secure_add_mv(*input, arch, sizeof(struct fat_arch))))

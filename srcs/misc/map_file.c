@@ -6,11 +6,11 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/23 22:54:19 by gpouyat           #+#    #+#             */
-/*   Updated: 2018/05/23 17:48:29 by gpouyat          ###   ########.fr       */
+/*   Updated: 2018/10/08 12:29:46 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "misc.h"
+#include "../../includes/misc.h"
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <sys/mman.h>
@@ -21,7 +21,7 @@ static int	static_intern_open(const char *prgm, const char *path)
 
 	if ((fd = open(path, O_RDONLY)) < 0)
 	{
-		ft_dprintf(STDERR_FILENO, "{red}%s{no}: '%s': open() fail\n", prgm, path);
+		ft_dprintf(STDERR_FILENO, ERR_OPEN_FMT, prgm, path);
 		return (-1);
 	}
 	return (fd);
@@ -31,23 +31,24 @@ static int	static_intern_fstat(const char *prgm, int fd, struct stat *buf)
 {
 	if (fstat(fd, buf) != 0)
 	{
-		ft_dprintf(STDERR_FILENO, "{red}%s{no}: fd:'%d' : fstat() fail\n", prgm, fd);
+		ft_dprintf(STDERR_FILENO, ERR_FSTAT_FMT, prgm, fd);
 		return (1);
 	}
 	if (S_ISDIR(buf->st_mode))
 	{
-		ft_dprintf(STDERR_FILENO, "{red}%s{no}: fd:'%d': it is a directory \n", prgm, fd);
+		ft_dprintf(STDERR_FILENO, ERR_IS_DIR_FMT, prgm, fd);
 		return (1);
 	}
 	return (0);
 }
 
-static int	static_intern_mmap(const char *prgm, void **data, int fd, size_t size)
+static int	static_intern_mmap(const char *prgm, void **data, int fd,
+																size_t size)
 {
 	*data = mmap(NULL, size, PROT_READ, MAP_FILE | MAP_PRIVATE, fd, 0);
 	if (*data == MAP_FAILED)
 	{
-		ft_dprintf(STDERR_FILENO, "{red}%s{no}: fd:'%d' : mmap() fail\n", prgm, fd);
+		ft_dprintf(STDERR_FILENO, ERR_MMAP_FMT, prgm, fd);
 		return (1);
 	}
 	return (0);
@@ -59,7 +60,7 @@ static int	close_fd_return(int fd, int ret)
 	return (ret);
 }
 
-int	map_file(const char *prgm, const char *path, t_arch *arch)
+int			map_file(const char *prgm, const char *path, t_arch *arch)
 {
 	struct stat		buf;
 	void			*data;

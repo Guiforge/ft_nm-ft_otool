@@ -6,17 +6,17 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/30 19:07:05 by gpouyat           #+#    #+#             */
-/*   Updated: 2018/06/07 23:27:31 by gpouyat          ###   ########.fr       */
+/*   Updated: 2018/10/08 12:00:45 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <mach-o/loader.h>
-#include <mach-o/fat.h>
-# include <mach-o/nlist.h>
-# include <ar.h>
-#include "misc.h"
+#include "../../includes/misc.h"
 
-t_type_macho which_header(t_arch *arch)
+/*
+**	detect type of header file
+*/
+
+t_type_macho	which_header(t_arch *arch)
 {
 	uint32_t		magic;
 
@@ -28,13 +28,18 @@ t_type_macho which_header(t_arch *arch)
 	else if (magic == FAT_MAGIC || magic == FAT_CIGAM)
 		return (M_FAT);
 	else if (magic == FAT_CIGAM_64 || magic == FAT_MAGIC_64)
-		return (M_FAT_64);	
-	else if (secure_add(*arch, arch->data, SARMAG) && !ft_strncmp(ARMAG, (char *)arch->data, SARMAG))
+		return (M_FAT_64);
+	else if (secure_add(*arch, arch->data, SARMAG) &&
+				!ft_strncmp(ARMAG, (char *)arch->data, SARMAG))
 		return (M_LIB);
 	return (M_ERR);
 }
 
-int		exec_handler(const t_handler_func funcs[], t_arch *arch)
+/*
+**	exec the good function handler
+*/
+
+int				exec_handler(const t_handler_func funcs[], t_arch *arch)
 {
 	t_type_macho	type;
 	int				index;
@@ -42,9 +47,7 @@ int		exec_handler(const t_handler_func funcs[], t_arch *arch)
 	index = -1;
 	type = which_header(arch);
 	if (type == M_ERR)
-	{
 		return (2);
-	}	
 	while (funcs[++index].type != M_END)
 		if (funcs[index].type == type)
 			return (funcs[index].f(arch));

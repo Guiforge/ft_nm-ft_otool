@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/18 16:29:49 by gpouyat           #+#    #+#             */
-/*   Updated: 2018/06/26 12:49:04 by gpouyat          ###   ########.fr       */
+/*   Updated: 2018/10/08 12:09:30 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ t_bool	print_cpu_type(t_arch *input)
 
 	if (!get_otool_flags()->print_arch)
 		return (True);
-	name = getArchInfoFromCpuType(input->cpu_type, input->cpu_subtype).name;
+	name = get_arch_info_from_cpu_type(input->cpu_type, input->cpu_subtype).name;
 	if (name && !ft_strcmp(name, GET_ARCH))
 	{
 		ft_printf("%s:\n", input->path);
