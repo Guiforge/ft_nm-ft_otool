@@ -53,6 +53,7 @@
         "sstream": "c",
         "streambuf": "c",
         "ft_otool.h": "c",
-        "locale": "c"
+        "locale": "c",
+        "secure_memory.h": "c"
     }
 }

@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/30 11:24:59 by gpouyat           #+#    #+#             */
-/*   Updated: 2018/10/08 13:18:37 by gpouyat          ###   ########.fr       */
+/*   Updated: 2018/10/08 16:11:31 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static t_nm_flags			g_flags = {
 	(t_handler_func *)g_handler_funcs
 };
 
-t_nm_flags					*get_nm_flags()
+t_nm_flags					*get_nm_flags(void)
 {
 	return (&g_flags);
 }
@@ -56,13 +56,24 @@ void						simple_option(char opt)
 		g_flags.j = True;
 	else if (opt == 'U')
 		g_flags.U = True;
+	else if (opt == 'p')
+	{
+		g_flags.n = False;
+		g_flags.p = True;
+	}
+	else if (opt == 'u')
+	{
+		g_flags.u = True;
+		g_flags.U = False;
+		g_flags.a = False;
+	}
 }
 
 int							intern_nm_parse_option(int ac, const char **av)
 {
 	int		opt;
 
-	while((opt = ft_getopt(ac, av, "hagAnpruUmj")) != -1)
+	while ((opt = ft_getopt(ac, av, "hagAnpruUmj")) != -1)
 	{
 		simple_option(opt);
 		if (opt == 'a')
@@ -73,17 +84,6 @@ int							intern_nm_parse_option(int ac, const char **av)
 		}
 		if (opt == 'h')
 			return (1);
-		if (opt == 'u')
-		{
-			g_flags.u = True;
-			g_flags.U = False;
-			g_flags.a = False;
-		}
-		if (opt == 'p')
-		{
-			g_flags.n = False;
-			g_flags.p = True;
-		}
 		if (opt == '?')
 			return (1);
 	}

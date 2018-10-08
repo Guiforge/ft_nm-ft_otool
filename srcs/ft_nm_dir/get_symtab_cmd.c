@@ -6,16 +6,16 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/15 11:27:46 by gpouyat           #+#    #+#             */
-/*   Updated: 2018/06/15 21:13:44 by gpouyat          ###   ########.fr       */
+/*   Updated: 2018/10/08 16:13:29 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_nm.h"
+#include "../../includes/ft_nm.h"
 
 struct symtab_command	*get_symtab_cmd(t_arch input)
 {
 	uint32_t				index;
-	struct	load_command	*lc;
+	struct load_command		*lc;
 
 	lc = input.lc;
 	index = -1;
@@ -24,8 +24,8 @@ struct symtab_command	*get_symtab_cmd(t_arch input)
 		if (ifswap32(&input, lc->cmd) == LC_SYMTAB)
 			return ((struct symtab_command *)lc);
 		if (!(lc = secure_add_mv(input, lc, ifswap32(&input, lc->cmdsize))))
-			break;
+			break ;
 	}
-	print_error(input.path,PROGRAM, ERR_MALFORMED);
-			return (NULL);
+	print_error(input.path, PROGRAM, ERR_MALFORMED);
+	return (NULL);
 }

@@ -6,27 +6,23 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 12:16:54 by gpouyat           #+#    #+#             */
-/*   Updated: 2018/06/15 21:14:19 by gpouyat          ###   ########.fr       */
+/*   Updated: 2018/10/08 16:58:01 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "misc.h"
-#include "libft.h"
-#include "ft_nm.h"
-#include <mach-o/nlist.h>
+#include "../../includes/ft_nm.h"
 
-static t_list		*create_sym_64(t_arch input, char *string_table, struct nlist_64 sym_table)
+static t_list	*create_sym_64(t_arch input, char *string_table,
+													struct nlist_64 sym_table)
 {
 	t_sym	*elem_sym;
 	t_list	*elem;
 
 	if (input.is_swap)
 		swap_nlist_64(&sym_table);
-	if (!(elem_sym = (t_sym *)ft_secu_malloc_lvl(sizeof(t_sym), MALLOC_LVL_FILE_MACH_O)))
-	{
-		ft_dprintf(STDERR_FILENO, "ERROR MALLOC\n");
-		return(NULL);
-	}
+	if (!(elem_sym = (t_sym *)ft_secu_malloc_lvl(sizeof(t_sym),
+													MALLOC_LVL_FILE_MACH_O)))
+		return (return_error_null(__FILE__, PROGRAM, ERR_MALLOC));
 	elem_sym->name = secure_string(input, string_table, sym_table.n_un.n_strx);
 	elem_sym->value = sym_table.n_value;
 	elem_sym->ntype = sym_table.n_type;
@@ -40,7 +36,8 @@ static t_list		*create_sym_64(t_arch input, char *string_table, struct nlist_64 
 	return (elem);
 }
 
-static int	loop_get_list_sym_64(t_arch *input, struct symtab_command sym, struct nlist_64 *array, char *string)
+static int		loop_get_list_sym_64(t_arch *input, struct symtab_command sym,
+										struct nlist_64 *array, char *string)
 {
 	int64_t		index;
 	t_list		*new;
@@ -62,37 +59,32 @@ static int	loop_get_list_sym_64(t_arch *input, struct symtab_command sym, struct
 static t_list	*get_list_syms_64(struct symtab_command sym, t_arch input)
 {
 	char			*string;
-	struct nlist_64 *array;
+	struct nlist_64	*array;
 
 	if (input.is_swap)
 		swap_symtab_command(&sym);
 	if (!(array = secure_add_mv(input, input.data, sym.symoff)))
-	{
-		print_error(input.path,PROGRAM, ERR_MALFORMED);
-		return (NULL);
-	}
+		return (return_error_null(input.path, PROGRAM, ERR_MALFORMED));
 	if (!(string = secure_add_mv(input, input.data, sym.stroff)))
-	{
-		print_error(input.path,PROGRAM, ERR_MALFORMED);
-		return (NULL);
-	}
+		return (return_error_null(input.path, PROGRAM, ERR_MALFORMED));
 	if (!loop_get_list_sym_64(&input, sym, array, string))
-		return(input.list);
+		return (input.list);
 	return (NULL);
 }
 
-int handler_64(t_arch *input)
+int				handler_64(t_arch *input)
 {
-	struct mach_header_64 header;
-	struct	symtab_command	*sym;
+	struct mach_header_64	header;
+	struct symtab_command	*sym;
 
 	if (get_header_64(*input, input->data, &header))
-		return(return_error(input->path, PROGRAM, ERR_INVALID, 2));
+		return (return_error(input->path, PROGRAM, ERR_INVALID, 2));
 	input->ncmds = header.ncmds;
 	input->cpu_type = header.cputype;
 	input->cpu_subtype = header.cpusubtype;
-	if (!(input->lc = secure_add_mv(*input, input->data, sizeof(struct mach_header_64))))
-		return(return_error(input->path, PROGRAM, ERR_INVALID, 2));
+	if (!(input->lc = secure_add_mv(*input, input->data,
+											sizeof(struct mach_header_64))))
+		return (return_error(input->path, PROGRAM, ERR_INVALID, 2));
 	if (!(sym = get_symtab_cmd(*input)))
 		return (1);
 	input->list = get_list_syms_64(*sym, *input);

@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/23 22:52:36 by gpouyat           #+#    #+#             */
-/*   Updated: 2018/06/26 14:07:08 by gpouyat          ###   ########.fr       */
+/*   Updated: 2018/10/08 17:47:33 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ typedef struct s_nm_flags {
 t_nm_flags		*get_nm_flags();
 int		intern_nm_parse_option(int ac, const char **av);
 
-char	if_upper(char c, uint8_t ntype);
 char	get_char_type(t_sym sym);
 void	print_value(t_sym sym, char c);
 
@@ -72,6 +71,7 @@ struct symtab_command	*get_symtab_cmd(t_arch input);
 
 void	print_nm(t_arch *input);
 void	print_m(t_sym sym);
+char	get_char_type(t_sym sym);
 
 void	sort_sym(t_list **lst_sym);
 
