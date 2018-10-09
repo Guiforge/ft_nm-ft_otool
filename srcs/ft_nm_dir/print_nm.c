@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/30 11:19:00 by gpouyat           #+#    #+#             */
-/*   Updated: 2018/10/08 17:59:57 by gpouyat          ###   ########.fr       */
+/*   Updated: 2018/10/09 11:39:48 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ static void		print_nm_simple(t_arch *input, t_sym sym, char c)
 		ft_putstr(sym.name);
 	else
 		ft_putstr("bad string index");
+	if (c == 'I')
+		ft_printf(" (indirect for %s)", sym.name);
 	ft_putchar('\n');
 }
 
