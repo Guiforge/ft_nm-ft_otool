@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 12:16:54 by gpouyat           #+#    #+#             */
-/*   Updated: 2018/10/08 16:28:33 by gpouyat          ###   ########.fr       */
+/*   Updated: 2018/10/10 12:57:03 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static t_list		*create_sym(t_arch input, char *string_table,
 		ft_secu_free(elem_sym);
 		return (NULL);
 	}
-	elem = ft_lstnew(elem_sym, sizeof(t_sym));
+	elem = ft_lstnew_secu(elem_sym, sizeof(t_sym), MALLOC_LVL_FILE_MACH_O);
 	return (elem);
 }
 

@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/23 22:54:19 by gpouyat           #+#    #+#             */
-/*   Updated: 2018/10/08 12:29:46 by gpouyat          ###   ########.fr       */
+/*   Updated: 2018/10/10 12:53:56 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int			map_file(const char *prgm, const char *path, t_arch *arch)
 		return (close_fd_return(fd, 1));
 	if (arch)
 	{
-		arch->path = ft_strdup(path);
+		arch->path = ft_strdup_secu(path, MALLOC_LVL_FILE_MACH_O);
 		arch->data = data;
 		arch->length = buf.st_size;
 	}
