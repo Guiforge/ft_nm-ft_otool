@@ -6,7 +6,7 @@
 /*   By: gpouyat <gpouyat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/24 09:02:33 by gpouyat           #+#    #+#             */
-/*   Updated: 2018/10/08 17:22:46 by gpouyat          ###   ########.fr       */
+/*   Updated: 2018/10/11 12:09:17 by gpouyat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ extern int g_optind;
 
 static int		intern_nm_help(void)
 {
-	ft_printf("This is beautiful Help\n");
+	ft_printf("USAGE: %s -[jUurpA] <input files>\n", PROGRAM);
 	return (1);
 }
 
