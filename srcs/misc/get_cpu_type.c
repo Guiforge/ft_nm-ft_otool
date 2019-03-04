@@ -13,11 +13,7 @@
 #include "../../includes/misc.h"
 
 /*
-** <arch.h>
-** https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&ved=2ahUKEwi\
-** p-JKazvbdAhVECewKHQerDTQQFjAAegQICRAB&url=https%3A%2F%2Fopensource.apple.com\
-** %2Fsource%2Fcctools%2Fcctools-773%2Flibstuff%2Farch.c&usg=AOvVaw2oS6wc-7BV_i\
-** 6xj5MOp9sj
+** https://opensource.apple.com/source/cctools/cctools-410.1/libstuff/arch.c.auto.html
 */
 
 static const t_arch_info g_arch_info_table[] = {
